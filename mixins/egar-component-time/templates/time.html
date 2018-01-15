@@ -1,0 +1,68 @@
+<fieldset id="{{key}}-group" class="{{#className}}{{className}}{{/className}} {{#error}}validation-error{{/error}}">
+    <legend>
+      {{#error}}
+        <span id="{{key}}-error" class="error-message">{{error.message}}</span>
+      {{/error}}
+        <span{{#legendClassName}} class="{{legendClassName}}"{{/legendClassName}}>{{legend}}</span>
+      {{#hint}}
+        <span id="{{key}}-hint" class="form-hint">{{hint}}</span>
+      {{/hint}}
+    </legend>
+  
+    <input type="hidden" name="{{key}}" />
+  
+    <div class="form-group form-time">
+        <div id="{{key}}-hour-group" class="form-group">
+            <label for="{{key}}-hour" class="form-label">
+                {{hour.label}}
+            </label>
+            <input type="text" name="{{key}}-hour" id="{{key}}-hour" class="form-control {{#error}}invalid-input{{/error}}" aria-required="{{required}}"
+                {{#hour.value}} value="{{hour.value}}" {{/hour.value}}
+                {{#hour.min}}min="{{hour.min}}"{{/hour.min}}
+                {{#hour.max}}max="{{hour.max}}"{{/hour.max}}
+                {{#hour.maxLength}}maxlength="{{hour.maxLength}}"{{/hour.maxLength}}
+                {{#hour.pattern}}pattern="{{hour.pattern}}"{{/hour.pattern}}
+                {{#hintId}}aria-describedby="{{key}}-hint"{{/hintId}}
+                {{#error}}aria-invalid="true"{{/error}}
+                autocomplete="on"
+                {{#attributes}}{{attribute}}="{{value}}"{{/attributes}}>
+        </div>
+    
+        {{#minutesRequired}}
+        <div id="{{key}}-minute-group" class="form-group">
+            <label for="{{key}}-minute" class="form-label">
+                {{minute.label}}
+            </label>
+            <input type="text" name="{{key}}-minute" id="{{key}}-minute" class="form-control {{#error}}invalid-input{{/error}}" aria-required="{{required}}"
+                {{#minute.value}} value="{{minute.value}}" {{/minute.value}}
+                {{#minute.min}}min="{{minute.min}}"{{/minute.min}}
+                {{#minute.max}}max="{{minute.max}}"{{/minute.max}}
+                {{#minute.maxLength}}maxlength="{{minute.maxLength}}"{{/minute.maxLength}}
+                {{#minute.pattern}}pattern="{{minute.pattern}}"{{/minute.pattern}}
+                {{#hintId}}aria-describedby="{{key}}-hint"{{/hintId}}
+                {{#error}}aria-invalid="true"{{/error}}
+                autocomplete="on"
+                {{#attributes}}{{attribute}}="{{value}}"{{/attributes}}>
+        </div>
+        {{/minutesRequired}}
+
+        {{#secondsRequired}}
+        <div id="{{key}}-seconds-group" class="form-group">
+            <label for="{{key}}-seconds" class="form-label">
+                {{second.label}}
+            </label>
+            <input type="text" name="{{key}}-second" id="{{key}}-hour" class="form-control" aria-required="{{required}}"
+                {{#second.value}} value="{{second.value}}" {{/second.value}}
+                {{#second.min}}min="{{second.min}}"{{/second.min}}
+                {{#second.max}}max="{{second.max}}"{{/second.max}}
+                {{#second.maxLength}}maxlength="{{second.maxLength}}"{{/second.maxLength}}
+                {{#second.pattern}}pattern="{{second.pattern}}"{{/second.pattern}}
+                {{#hintId}}aria-describedby="{{key}}-hint"{{/hintId}}
+                {{#error}}aria-invalid="true"{{/error}}
+                autocomplete="on"
+                {{#attributes}}{{attribute}}="{{value}}"{{/attributes}}>
+        </div>
+        {{/secondsRequired}}
+    </div>
+  </fieldset>
+  

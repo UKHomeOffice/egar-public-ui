@@ -1,0 +1,62 @@
+workflow-api:
+  container_name: workflow-api
+  image: pipe.egarteam.co.uk/egar-workflow-api:4.2.3
+  expose:
+  # Expose 9090 for the workflow-api-proxy to see
+  - "9090"
+  command:
+  - --spring.profiles.active=mock-gar,mock-location,mock-person,mock-aircraft,mock-submission,mock-file
+  - --workflow.egar.submission.api.url=http://172.31.21.16:8085/api/v1/Submission/
+
+workflow-api-proxy:
+  container_name: workflow-api-proxy
+  image: quay.io/gambol99/keycloak-proxy
+  expose:
+  # Expose 8010 for the public-ui to see
+  - "8010"
+  links:
+  - workflow-api
+  external_links:
+  - keycloak
+  command:
+  - --discovery-url=http://keycloak:8080/auth/realms/${KEYCLOAK_REALM}
+  - --client-id=egar-public-ui
+  - --client-secret=${KEYCLOAK_CLIENT_SECRET}
+  - --listen=0.0.0.0:8010
+  - --encryption-key=${KEYCLOAK_ENC_KEY}
+  - --upstream-url=http://workflow-api:9090
+  - --resources=uri=/api*|roles=uma_authorization
+  - --secure-cookie=false
+  - --enable-logging=true
+  - --no-redirects=true
+  - --upstream-response-header-timeout=50s
+  - --upstream-timeout=50s
+  - --upstream-keepalive-timeout=50s
+  - --upstream-expect-continue-timeout=50s
+  - --add-claims=email
+
+public-ui-proxy:
+  container_name: public-ui-proxy
+  image: quay.io/gambol99/keycloak-proxy
+  ports:
+  # Bind to 8010 on the host to allow the site to be visited by a browser
+  - "8010:8010"
+  external_links:
+  - keycloak
+  command:
+  - --discovery-url=http://keycloak:8080/auth/realms/${KEYCLOAK_REALM}
+  - --client-id=egar-public-ui
+  - --client-secret=${KEYCLOAK_CLIENT_SECRET}
+  - --listen=0.0.0.0:8010
+  - --encryption-key=${KEYCLOAK_ENC_KEY}
+  - --upstream-url=http://${DOCKER_HOST_ADDRESS}:8080
+  - --upstream-response-header-timeout=10s
+  - --resources=uri=/egar*|roles=uma_authorization
+  - --secure-cookie=false
+  - --add-claims=given_name
+  - --add-claims=family_name
+  - --add-claims=contact_number
+  - --add-claims=alt_contact_number
+  - --add-claims=iss
+  - --enable-logging=true
+  - --enable-refresh-tokens=true

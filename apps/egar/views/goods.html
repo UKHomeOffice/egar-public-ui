@@ -1,0 +1,21 @@
+{{<partials-columns}}
+
+  {{$page-content}}
+
+  <p>You don&apos;t have to give us this information, but doing so will assist Border Force to process your flight more quickly.</p>
+
+    {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    {{#fields}}
+        {{#renderField}}{{/renderField}}
+    {{/fields}}
+    {{#afterFields}}
+        {{afterFields}}
+    {{/afterFields}}
+    {{<partials-submit-buttons}}
+    {{/partials-submit-buttons}}
+
+  {{/page-content}}
+
+{{/partials-columns}}

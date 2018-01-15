@@ -1,0 +1,659 @@
+{{<partials-fullwidth}}
+
+{{$page-content}}
+{{#beforeFields}}
+{{beforeFields}}
+{{/beforeFields}}
+{{#fields}}
+{{#renderField}}{{/renderField}}
+{{/fields}}
+{{#afterFields}}
+{{afterFields}}
+{{/afterFields}}
+
+{{#values}}
+    {{#error}}
+    <div class="validation-error">
+        <div class="validation-summary">
+            <span class="error-message">{{error.reason}}</span>
+        </div>
+    </div>
+    {{/error}}
+
+    {{#validationError}}
+    <div class="error-summary" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+        <h1 class="heading-medium error-summary-heading">
+            There was a problem
+        </h1>
+        {{#validationError.validation}}
+        <ul class="error-message">
+            <li class="error-list">{{heading}} - {{message}}.</li>
+        </ul>
+        {{/validationError.validation}}
+    </div>
+    {{/validationError}}
+
+    <p>{{summary.subheading}}</p>
+
+        <div class="summary-row">
+            <div class="summary-field-name">GAR Reference:</div>
+            <div class="summary-data">
+                <div class="summary-field-info">{{garUuid}}</div>
+                <div class="summary-field-data"></div>
+            </div>
+
+        </div>
+        <div class="summary-row">
+            <div class="summary-field-name">Flight Status:</div>
+            <div class="summary-data">
+                <div class="summary-field-info">{{state}}</div>
+                <div class="summary-field-data"></div>
+            </div>
+        </div>
+        <hr class="summary" />
+
+        <div class="summary-row">
+            <div class="summary-field-name">Aircraft details</div>
+            <div class="summary-data">
+                {{#aircraftExists}}
+                <div class="sum-row">
+                    <div class="summary-field-info">Aircraft Registration:</div>
+                    {{#aircraft.registration}}
+                    <div class="summary-field-data">{{aircraft.registration}}</div>
+                    {{/aircraft.registration}}
+                    {{^aircraft.registration}}
+                    <div class="summary-field-data error-message">{{aircraft.registrationError}}</div>
+                    {{/aircraft.registration}}
+                </div>
+                <div class="sum-row">
+                    <div class="summary-field-info">Type of Aircraft: </div>
+                    {{#aircraft.type}}
+                    <div class="summary-field-data">{{aircraft.type}}</div>
+                    {{/aircraft.type}}
+                    {{^aircraft.type}}
+                    <div class="summary-field-data error-message">{{aircraft.typeError}}</div>
+                    {{/aircraft.type}}
+                </div>
+                <div class="sum-row">
+                    <div class="summary-field-info">Usual base of aircraft:</div>
+                    {{#aircraft.base}}
+                    <div class="summary-field-data">{{aircraft.base}}</div>
+                    {{/aircraft.base}}
+                    {{^aircraft.base}}
+                    <div class="summary-field-data error-message">{{aircraft.baseError}}</div>
+                    {{/aircraft.base}}
+                </div>
+                <div class="sum-row">
+                    <div class="summary-field-info">Have all taxes due on the aircraft been paid and accounted for within the UK? </div>
+                    {{#aircraft.taxesPaid}}
+                    <div class="summary-field-data">{{aircraft.taxesPaid}}</div>
+                    {{/aircraft.taxesPaid}}
+                    {{^aircraft.taxesPaid}}
+                    <div class="summary-field-data error-message">{{aircraft.taxesPaidError}}</div>
+                    {{/aircraft.taxesPaid}}
+                    </div>
+                {{/aircraftExists}}
+                {{^aircraftExists}}
+                <div class="summary-no-data">No aircraft data</div>
+                {{/aircraftExists}}
+            </div>
+            {{#summary.showChange}}
+            <div class="summary-change">
+                <button class="change-btn" type="submit" name="change_location" value="aircraft">Change</button>
+            </div>
+            {{/summary.showChange}}
+        </div>
+        <hr class="summary" />
+
+        <div class="summary-row">
+            <div class="summary-field-name">Departure details</div>
+            <div class="summary-data">
+                {{#departureExists}}
+                    <div class="sum-row">
+                        <div class="summary-field-info">Date of departure:</div>
+                        {{^departure.dateError}}
+                        <div class="summary-field-data">{{departure.date}}</div>
+                        {{/departure.dateError}}
+                        {{#departure.dateError}}
+                        <div class="summary-field-data error-message">{{departure.dateError}}</div>
+                        {{/departure.dateError}}
+                    </div>
+                    <div class="sum-row">
+                        <div class="summary-field-info">Time of departure: </div>
+                        {{^departure.timeError}}
+                        <div class="summary-field-data">{{departure.time}}</div>
+                        {{/departure.timeError}}
+                        {{#departure.timeError}}
+                        <div class="summary-field-data error-message">{{departure.timeError}}</div>
+                        {{/departure.timeError}}
+                    </div>
+                    <div class="sum-row">
+                        <div class="summary-field-info">Departure location: </div>
+                        {{^departure.locationError}}
+                        <div class="summary-field-data">{{departure.location}}</div>
+                        {{/departure.locationError}}
+                        {{#departure.locationError}}
+                        <div class="summary-field-data error-message">{{departure.locationError}}</div>
+                        {{/departure.locationError}}
+                    </div>
+                {{/departureExists}}
+                {{^departureExists}}
+                <div class="summary-no-data">No departure data</div>
+                {{/departureExists}}
+            </div>
+            {{#summary.showChange}}
+            <div class="summary-change">
+                <button class="change-btn" type="submit" name="change_location" value="departure">Change</button>
+            </div>
+            {{/summary.showChange}}
+        </div>
+
+        <hr class="summary" />
+
+        <div class="summary-row">
+            <div class="summary-field-name">Arrival details</div>
+            <div class="summary-data">
+                {{#arrivalExists}}
+                <div class="sum-row">
+                    <div class="summary-field-info">Date of arrival:</div>
+                    {{^arrival.dateError}}
+                    <div class="summary-field-data">{{arrival.date}}</div>
+                    {{/arrival.dateError}}
+                    {{#arrival.dateError}}
+                    <div class="summary-field-data error-message">{{arrival.dateError}}</div>
+                    {{/arrival.dateError}}
+                </div>
+                <div class="sum-row">
+                    <div class="summary-field-info">Time of arrival:</div>
+                    {{^arrival.timeError}}
+                    <div class="summary-field-data">{{arrival.time}}</div>
+                    {{/arrival.timeError}}
+                    {{#arrival.timeError}}
+                    <div class="summary-field-data error-message">{{arrival.timeError}}</div>
+                    {{/arrival.timeError}}
+                </div>
+                <div class="sum-row">
+                    <div class="summary-field-info">Arrival location:</div>
+                    {{^arrival.locationError}}
+                    <div class="summary-field-data">{{arrival.location}}</div>
+                    {{/arrival.locationError}}
+                    {{#arrival.locationError}}
+                    <div class="summary-field-data error-message">{{arrival.locationError}}</div>
+                    {{/arrival.locationError}}
+                </div>
+                {{/arrivalExists}}
+                {{^arrivalExists}}
+                <div class="summary-no-data">No arrival data</div>
+                {{/arrivalExists}}
+            </div>
+            {{#summary.showChange}}
+            <div class="summary-change">
+                <button class="change-btn" type="submit" name="change_location" value="arrival">Change</button>
+            </div>
+            {{/summary.showChange}}
+        </div>
+
+        <hr class="summary" />
+
+        <div class="summary-row">
+            <div class="summary-field-name">Hazardous goods</div>
+            <div class="summary-data">
+                {{#hazardousExists}}
+                <div class="sum-row">
+                    <div class="summary-field-info">Are there any dangerous or hazardous goods on board?</div>
+                    {{#hazardous.goods}}
+                    <div class="summary-field-data">{{hazardous.goods}}</div>
+                    {{/hazardous.goods}}
+                    {{^hazardous.goods}}
+                    <div class="summary-field-data error-message">{{hazardous.goodsError}}</div>
+                    {{/hazardous.goods}}
+                    </div>
+                {{/hazardousExists}}
+                {{^hazardousExists}}
+                <div class="summary-no-data">Unknown</div>
+                {{/hazardousExists}}
+            </div>
+            {{#summary.showChange}}
+            <div class="summary-change">
+                <button class="change-btn" type="submit" name="change_location" value="goods">Change</button>
+            </div>
+            {{/summary.showChange}}
+        </div>
+
+        <hr class="summary" />
+
+        <div class="summary-row">
+            <div class="summary-field-name">Captain details</div>
+            <div class="summary-data">
+                {{#captainExists}}
+                <details>
+                    <summary role="button">
+                        <span class="summary">Captain - {{captain.forename}} {{captain.surname}}</span>
+                    </summary>
+                <div class="panel-indent-person">
+                <div class="sum-row">
+                    <div class="summary-field-info">Given names(s)</div>
+                    {{#captain.forename}}
+                    <div class="summary-field-data">{{captain.forename}}</div>
+                    {{/captain.forename}}
+                    {{^captain.forename}}
+                    <div class="summary-field-data error-message">{{captain.forenameError}}</div>
+                    {{/captain.forename}}
+                </div>
+                <div class="sum-row">
+                    <div class="summary-field-info">Family name:</div>
+                    {{#captain.surname}}
+                    <div class="summary-field-data">{{captain.surname}}</div>
+                    {{/captain.surname}}
+                    {{^captain.surname}}
+                    <div class="summary-field-data error-message">{{captain.surnameError}}</div>
+                    {{/captain.surname}}
+                </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Gender:</div>
+                            <div class="summary-field-data">{{captain.gender}}</div>
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">UK home address:</div>
+                            <div class="summary-field-data">{{captain.address}}</div>
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Date of birth:</div>
+                            {{#captain.dob}}
+                            <div class="summary-field-data">{{captain.dob}}</div>
+                            {{/captain.dob}}
+                            {{^captain.dob}}
+                            <div class="summary-field-data error-message">{{captain.dobError}}</div>
+                            {{/captain.dob}}
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Place of birth:</div>
+                            {{#captain.place}}
+                            <div class="summary-field-data">{{captain.place}}</div>
+                            {{/captain.place}}
+                            {{^captain.place}}
+                            <div class="summary-field-data error-message">{{captain.placeError}}</div>
+                            {{/captain.place}}
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Country of nationality:</div>
+                            {{#captain.nationality}}
+                            <div class="summary-field-data">{{captain.nationality}}</div>
+                            {{/captain.nationality}}
+                            {{^captain.nationality}}
+                            <div class="summary-field-data error-message">{{captain.nationalityError}}</div>
+                            {{/captain.nationality}}
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Travel document type:</div>
+                            {{#captain.documentType}}
+                            <div class="summary-field-data">{{captain.documentType}}</div>
+                            {{/captain.documentType}}
+                            {{^captain.documentType}}
+                            <div class="summary-field-data error-message">{{captain.documenTypeError}}</div>
+                            {{/captain.documentType}}
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Travel document number:</div>
+                            {{#captain.documentNo}}
+                            <div class="summary-field-data">{{captain.documentNo}}</div>
+                            {{/captain.documentNo}}
+                            {{^captain.documentNo}}
+                            <div class="summary-field-data error-message">{{captain.documentNoError}}</div>
+                            {{/captain.documentNo}}
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Travel document expiry date:</div>
+                            {{#captain.documentExpiry}}
+                            <div class="summary-field-data">{{captain.documentExpiry}}</div>
+                            {{/captain.documentExpiry}}
+                            {{^captain.documentExpiry}}
+                            <div class="summary-field-data error-message">{{captain.documentExpiryError}}</div>
+                            {{/captain.documentExpiry}}
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Travel document issuing country:</div>
+                            {{#captain.documentIssueCountry}}
+                            <div class="summary-field-data">{{captain.documentIssueCountry}}</div>
+                            {{/captain.documentIssueCountry}}
+                            {{^captain.documentIssueCountry}}
+                            <div class="summary-field-data error-message">{{captain.documentIssueError}}</div>
+                            {{/captain.documentIssueCountry}}
+                        </div>
+                        <div class="sum-row">
+                                <div class="summary-field-info">Responsible person:</div>
+                                {{#captain.responsiblePerson.type}}
+                                <div class="summary-field-data">{{captain.responsiblePerson.type}}</div>
+                                {{/captain.responsiblePerson.type}}
+                                {{^captain.responsiblePerson.type}}
+                            <div class="summary-field-data error-message">{{captain.responsiblePersonError}}</div>
+                                {{/captain.responsiblePerson.type}}
+                        </div>
+                        {{^captain.responsiblePerson.captainResponsible}}
+                        <div class="sum-row">
+                                <div class="summary-field-info">Responsible person name:</div>
+                                {{#captain.responsiblePerson.name}}
+                                <div class="summary-field-data">{{captain.responsiblePerson.name}}</div>
+                                {{/captain.responsiblePerson.name}}
+                                {{^captain.responsiblePerson.name}}
+                            <div class="summary-field-data error-message">{{captain.responsiblePersonNameError}}</div>
+                                {{/captain.responsiblePerson.name}}
+                        </div>
+                        <div class="sum-row">
+                                <div class="summary-field-info">Responsible person contact number:</div>
+                                {{#captain.responsiblePerson.contact_number}}
+                                <div class="summary-field-data">{{captain.responsiblePerson.contact_number}}</div>
+                                {{/captain.responsiblePerson.contact_number}}
+                                {{^captain.responsiblePerson.contact_number}}
+                                <div class="summary-field-data error-message">{{captain.responsiblePersonNumberError}}</div>
+                                {{/captain.responsiblePerson.contact_number}}
+                        </div>
+                        {{/captain.responsiblePerson.captainResponsible}}
+                    </div>
+                    </details>
+
+                {{/captainExists}}
+                {{^captainExists}}
+                {{#noCaptain}}
+                <div class="summary-field-info summary-no-data">No captain</div>
+                <div class="summary-field-data error-message">{{noCaptain}}</div>
+                {{/noCaptain}}
+                {{^noCaptain}}
+                <div class="summary-no-data">No captain</div>
+                {{/noCaptain}}
+
+                {{/captainExists}}
+            </div>
+            {{#summary.showChange}}
+            <div class="summary-change">
+                <button class="change-btn" type="submit" name="change_location" value="people">Change</button>
+            </div>
+            {{/summary.showChange}}
+        </div>
+
+        <hr class="summary" />
+
+        <div class="summary-row">
+            <div class="summary-field-name">Crew details</div>
+            <div class="summary-data">
+                {{#crewExist}}
+                    {{#crew}}
+                    <details>
+                            <summary role="button">
+                                <span class="summary">Crew - {{forename}} {{surname}}</span>
+                            </summary>
+                        <div class="panel-indent-person">
+                    <div class="sum-row">
+                        <div class="summary-field-info">Given names(s)</div>
+                        {{#forename}}
+                        <div class="summary-field-data">{{forename}}</div>
+                        {{/forename}}
+                        {{^forename}}
+                        <div class="summary-field-data error-message">{{forenameError}}</div>
+                        {{/forename}}
+                    </div>
+                    <div class="sum-row">
+                        <div class="summary-field-info">Family name:</div>
+                        {{#surname}}
+                        <div class="summary-field-data">{{surname}}</div>
+                        {{/surname}}
+                        {{^surname}}
+                        <div class="summary-field-data error-message">{{surnameError}}</div>
+                        {{/surname}}
+                    </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Gender:</div>
+                                <div class="summary-field-data">{{gender}}</div>
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">UK home address:</div>
+                                <div class="summary-field-data">{{address}}</div>
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Date of birth:</div>
+                                {{#dob}}
+                                <div class="summary-field-data">{{dob}}</div>
+                                {{/dob}}
+                                {{^dob}}
+                                <div class="summary-field-data error-message">{{dobError}}</div>
+                                {{/dob}}
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Place of birth:</div>
+                                {{#place}}
+                                <div class="summary-field-data">{{place}}</div>
+                                {{/place}}
+                                {{^place}}
+                                <div class="summary-field-data error-message">{{placeError}}</div>
+                                {{/place}}
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Country of nationality:</div>
+                                {{#nationality}}
+                                <div class="summary-field-data">{{nationality}}</div>
+                                {{/nationality}}
+                                {{^nationality}}
+                                <div class="summary-field-data error-message">{{nationalityError}}</div>
+                                {{/nationality}}
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Travel document type:</div>
+                                {{#documentType}}
+                                <div class="summary-field-data">{{documentType}}</div>
+                                {{/documentType}}
+                                {{^documentType}}
+                                <div class="summary-field-data error-message">{{documentTypeError}}</div>
+                                {{/documentType}}
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Travel document number:</div>
+                                {{#documentNo}}
+                                <div class="summary-field-data">{{documentNo}}</div>
+                                {{/documentNo}}
+                                {{^documentNo}}
+                                <div class="summary-field-data error-message">{{documentNoError}}</div>
+                                {{/documentNo}}
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Travel document expiry date:</div>
+                                {{#documentExpiry}}
+                                <div class="summary-field-data">{{documentExpiry}}</div>
+                                {{/documentExpiry}}
+                                {{^documentExpiry}}
+                                <div class="summary-field-data error-message">{{documentExpiryError}}</div>
+                                {{/documentExpiry}}
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Travel document issuing country:</div>
+                                {{#documentIssueCountry}}
+                                <div class="summary-field-data">{{documentIssueCountry}}</div>
+                                {{/documentIssueCountry}}
+                                {{^documentIssueCountry}}
+                                <div class="summary-field-data error-message">{{documentIssueError}}</div>
+                                {{/documentIssueCountry}}
+                            </div>
+                        </div>
+                    </details>
+
+                        {{^isLast}}
+                            <hr class="summary" />
+                        {{/isLast}}
+                    {{/crew}}
+                {{/crewExist}}
+                {{^crewExist}}
+                <div class="summary-no-data">No crew</div>
+                {{/crewExist}}
+            </div>
+            {{#summary.showChange}}
+            <div class="summary-change">
+                <button class="change-btn" type="submit" name="change_location" value="people">Change</button>
+            </div>
+            {{/summary.showChange}}
+        </div>
+
+        <hr class="summary" />
+            <div class="summary-row">
+                <div class="summary-field-name">Passenger details</div>
+                <div class="summary-data">
+                    {{#passengersExist}}
+                        {{#passengers}}
+                        <details>
+                                <summary role="button">
+                                    <span class="summary">Passenger - {{forename}} {{surname}}</span>
+                                </summary>
+                            <div class="panel-indent-person">
+                        <div class="sum-row">
+                                <div class="summary-field-info">Given names(s)</div>
+                                {{#forename}}
+                                <div class="summary-field-data">{{forename}}</div>
+                                {{/forename}}
+                                {{^forename}}
+                                <div class="summary-field-data error-message">{{forenameError}}</div>
+                                {{/forename}}
+                            </div>
+                            <div class="sum-row">
+                                <div class="summary-field-info">Family name:</div>
+                                {{#surname}}
+                                <div class="summary-field-data">{{surname}}</div>
+                                {{/surname}}
+                                {{^surname}}
+                                <div class="summary-field-data error-message">{{surnameError}}</div>
+                                {{/surname}}
+                            </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Gender:</div>
+                                        <div class="summary-field-data">{{gender}}</div>
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">UK home address:</div>
+                                        <div class="summary-field-data">{{address}}</div>
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Date of birth:</div>
+                                        {{#dob}}
+                                        <div class="summary-field-data">{{dob}}</div>
+                                        {{/dob}}
+                                        {{^dob}}
+                                        <div class="summary-field-data error-message">{{dobError}}</div>
+                                        {{/dob}}
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Place of birth:</div>
+                                        {{#place}}
+                                        <div class="summary-field-data">{{place}}</div>
+                                        {{/place}}
+                                        {{^place}}
+                                        <div class="summary-field-data error-message">{{placeError}}</div>
+                                        {{/place}}
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Country of nationality:</div>
+                                        {{#nationality}}
+                                        <div class="summary-field-data">{{nationality}}</div>
+                                        {{/nationality}}
+                                        {{^nationality}}
+                                        <div class="summary-field-data error-message">{{nationalityError}}</div>
+                                        {{/nationality}}
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Travel document type:</div>
+                                        {{#documentType}}
+                                        <div class="summary-field-data">{{documentType}}</div>
+                                        {{/documentType}}
+                                        {{^documentType}}
+                                        <div class="summary-field-data error-message">{{documentTypeError}}</div>
+                                        {{/documentType}}
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Travel document number:</div>
+                                        {{#documentNo}}
+                                        <div class="summary-field-data">{{documentNo}}</div>
+                                        {{/documentNo}}
+                                        {{^documentNo}}
+                                        <div class="summary-field-data error-message">{{documentNoError}}</div>
+                                        {{/documentNo}}
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Travel document expiry date:</div>
+                                        {{#documentExpiry}}
+                                        <div class="summary-field-data">{{documentExpiry}}</div>
+                                        {{/documentExpiry}}
+                                        {{^documentExpiry}}
+                                        <div class="summary-field-data error-message">{{documentExpiryError}}</div>
+                                        {{/documentExpiry}}
+                                    </div>
+                                    <div class="sum-row">
+                                        <div class="summary-field-info">Travel document issuing country:</div>
+                                        {{#documentIssueCountry}}
+                                        <div class="summary-field-data">{{documentIssueCountry}}</div>
+                                        {{/documentIssueCountry}}
+                                        {{^documentIssueCountry}}
+                                        <div class="summary-field-data error-message">{{documentIssueError}}</div>
+                                        {{/documentIssueCountry}}
+                                    </div>
+                                </div>
+                                </details>
+
+                            {{^isLast}}
+                                <hr class="summary" />
+                            {{/isLast}}
+                        {{/passengers}}
+                    {{/passengersExist}}
+                    {{^passengersExist}}
+                    <div class="summary-no-data">No passengers</div>
+                    {{/passengersExist}}
+                </div>
+                {{#summary.showChange}}
+                <div class="summary-change">
+                    <button class="change-btn" type="submit" name="change_location" value="people">Change</button>
+                </div>
+                {{/summary.showChange}}
+            </div>
+
+            <hr class="summary" />
+
+            <div class="summary-row">
+                <div class="summary-field-name">Supporting documents</div>
+                <div class="summary-data">
+                    {{#filesExist}}
+                        {{#files}}
+                        <div class="sum-row">
+                            <div class="summary-field-info">Filename:</div>
+                            {{^fileNameError}}
+                            <div class="summary-field-data">{{filename}}</div>
+                            {{/fileNameError}}
+                            {{#fileNameError}}
+                            <div class="summary-field-data error-message">{{fileNameError}}</div>
+                            {{/fileNameError}}
+                        </div>
+                        <div class="sum-row">
+                            <div class="summary-field-info">Status: </div>
+                            {{^fileStatusError}}
+                            <div class="summary-field-data">{{filestatus}}</div>
+                            {{/fileStatusError}}
+                            {{#fileStatusError}}
+                            <div class="summary-field-data error-message">{{fileStatusError}}</div>
+                            {{/fileStatusError}}
+                        </div>
+                        {{^isLast}}
+                        <hr class="summary" />
+                        {{/isLast}}
+                        {{/files}}
+                    {{/filesExist}}
+                    {{^filesExist}}
+                    <div class="summary-no-data">None uploaded</div>
+                    {{/filesExist}}
+                </div>
+                {{#summary.showChange}}
+                <div class="summary-change">
+                    <button class="change-btn" type="submit" name="change_location" value="upload-files">Change</button>
+                </div>
+                {{/summary.showChange}}
+            </div>
+        <hr class="summary"/>
+        {{<partials-submit-buttons}}
+        {{/partials-submit-buttons}}
+    {{/values}}
+
+{{/page-content}}
+{{/partials-fullwidth}}

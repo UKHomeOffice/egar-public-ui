@@ -1,0 +1,10 @@
+{
+    "rules": {
+        "implicit-dependencies/no-implicit": [
+            "error",
+            {
+                "dev": true
+            }
+        ]
+    }
+}

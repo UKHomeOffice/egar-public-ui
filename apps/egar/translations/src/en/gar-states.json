@@ -1,0 +1,7 @@
+{
+    "DRAFT": "Draft",
+    "SUBMITTED": "Submitted",
+    "FAILED": "Unsuccessful",
+    "PENDING": "Pending",
+    "CANCELLED": "Cancelled"
+}

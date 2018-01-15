@@ -1,0 +1,37 @@
+{{<partials-fullwidth}}
+  {{$page-content}}
+     {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    {{#fields}}
+        {{#renderField}}{{/renderField}}
+    {{/fields}}
+    {{#afterFields}}
+        {{afterFields}}
+    {{/afterFields}}
+    <p>You can reuse captain, crew and passenger details from a previously submitted GAR within the last twelve months. Records that were entered more then twelve months ago will not be available and you will be required to re-enter these details via the add new captain, crew and passenger details</p>
+    <p>You must ensure that all data submitted against a person is up to date prior to your GAR submission</p>
+    <table>
+        <thead>
+            <tr>
+                <th><a href="#">Type</a></th>
+                <th><a href="#">Given name(s)</a></th>
+                <th><a href="#">Family name(s)</a></th>
+                <th><a href="#">Date of birth</a></th>
+                <th><a href="#">Travel document number</a></th>
+                <th><a href="#">Expiry date</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="6">There are no records available</td>
+            </tr>
+        <tbody>
+    </table>
+    <br/><br/>
+
+    {{<partials-submit-buttons}}
+    {{/partials-submit-buttons}}
+  {{/page-content}}
+
+{{/partials-fullwidth}}

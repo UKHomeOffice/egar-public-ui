@@ -1,0 +1,69 @@
+{{<partials-fullwidth}}
+{{$page-content}}
+{{#beforeFields}}
+   {{beforeFields}}
+{{/beforeFields}}
+
+<h3>You can edit, view or cancel draft and submitted General Aviation Reports (GARs) depending on the status of the flight.</h3>
+<!--
+<h3>Search on date of departure to find your GAR.</h3>
+-->
+
+{{#fields}}
+<!--
+s{{#renderField}}{{/renderField}}
+-->
+{{/fields}}
+{{#afterFields}}
+{{afterFields}}
+{{/afterFields}}
+
+<!--
+{{#input-submit}}search{{/input-submit}}
+-->
+
+{{#values}}
+
+    <table class="egar-table">
+        <caption>List of GARs</caption>
+        <tr>
+            <!--<th scope="col" class="hide-header">Selected</th>-->
+            <th scope="col">Status</th>
+            <th scope="col">GAR reference</th>
+            <th scope="col">Submission reference</th>
+            <th scope="col">Aircraft registration</th>
+            <th scope="col">Departure date</th>
+            <th scope="col">Departure time</th>
+            <th scope="col">Departure ICAO</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {{#gars}}
+        <tr>
+             <!-- <td>
+                <input type="checkbox"  />
+            </td>-->
+            <td>{{state}}</td>
+            <td>{{gar_uuid}}</td>
+            <td>{{submission.external_ref}}</td>
+            <td>{{aircraft.registration}}</td>
+            <td>{{departure.date}}</td>
+            <td>{{departure.time}}</td>
+            <td>{{departure.ICAO}}</td>
+            <td>
+                {{#canEdit}}
+                <button type="submit" name="edit-{{gar_uuid}}" value="{{gar_uuid}}" class="link-button">Edit </button><br/>
+                {{/canEdit}}
+                {{#canCancel}}
+                <button type="submit" name="cancel-{{gar_uuid}}" value="{{gar_uuid}}" class="link-button">Cancel </button><br/>
+                {{/canCancel}}
+                <button type="submit" name="view-{{gar_uuid}}" value="{{gar_uuid}}" class="link-button">View </button>
+            </td>
+        </tr>
+        {{/gars}}
+      </table>
+
+
+    {{/values}}
+
+{{/page-content}}
+{{/partials-fullwidth}}

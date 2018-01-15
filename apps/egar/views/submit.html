@@ -1,0 +1,48 @@
+{{<partials-fullwidth}}
+
+  {{$page-content}}
+     {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    {{#fields}}
+        {{#renderField}}{{/renderField}}
+    {{/fields}}
+    {{#afterFields}}
+        {{afterFields}}
+    {{/afterFields}}
+
+    <p>Please check and review your GAR details before you proceed to submit.</p>
+{{#values}}
+<div class="summary-row">
+    <div class="summary-field-name">GAR Reference:</div>
+    <div class="summary-data">
+        <div class="summary-field-info">{{garUuid}}</div>
+        <div class="summary-field-data"></div>
+    </div>
+
+</div>
+
+<div class="summary-row">
+    <div class="summary-field-name">Flight Status:</div>
+    <div class="summary-data">
+        <div class="summary-field-info">{{state}}</div>
+        <div class="summary-field-data"></div>
+    </div>
+</div>
+{{/values}}
+
+<hr class="summary" />
+
+<p>If your GAR is incomplete you can save it as a draft. If all details have been entered correctly and they are to the best of your knowledge you may choose to submit this GAR.
+</p>
+
+<p>By choosing to submit, you are confirming that you are either the Captain, the responsible person, or person acting on their behalf. You are confirming that all details entered are correct and to the best of your knowledge. Once your GAR is submitted you will be given a unique reference number which will confirm your submission.</p>
+
+<hr class="summary" />
+
+{{<partials-submit-buttons}}
+{{/partials-submit-buttons}}
+
+{{/page-content}}
+
+{{/partials-fullwidth}}

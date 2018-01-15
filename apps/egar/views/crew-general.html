@@ -1,0 +1,17 @@
+{{<partials-columns}}
+
+  {{$page-content}}
+     {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    {{#fields}}
+        {{#renderField}}{{/renderField}}
+    {{/fields}}
+    {{#afterFields}}
+        {{afterFields}}
+    {{/afterFields}}
+    {{<partials-submit-buttons}}
+    {{/partials-submit-buttons}}
+  {{/page-content}}
+
+{{/partials-columns}}

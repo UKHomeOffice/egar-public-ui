@@ -1,0 +1,15 @@
+{
+    "rules": {
+        "no-unused-expressions": 0,
+        "implicit-dependencies/no-implicit": [
+            "error",
+            {
+                "dev": true
+            }
+        ],
+        "max-nested-callbacks": [
+            "error",
+            5
+        ]
+    }
+}

@@ -1,0 +1,388 @@
+@import "$$theme";
+li{
+  list-style: none;
+}
+
+.phase-banner {
+  @include phase-banner();
+}
+
+$text-dark: #0B0C0C;
+$text-grey: #6F777B;
+$link-unvisited: #005EA5;
+$link-visited: #4C2C92;
+$footer-background: #DEE0E2;
+$footer-text: #454A4C;
+$focus: #FFBF47;
+$button-background: #00823b;
+$button-text: #FFF;
+$button-shadow: #003618;
+/* ADDED styling for egar */
+/* taken from gov.uk site, not included in css from hof-generator */
+/* the css mde from the hof-generator project appears to be out of date */
+.add-title-margin{
+  margin-top: 45px;
+}
+li{
+  display:list-item;
+  list-style: disc;
+}
+nav li{
+  list-style: none;
+}
+.nav-confirm{
+  margin-left: 30px;
+}
+nav ul li:first-child{
+  margin-top:10px;
+}
+.column-full, .column-half, .column-two-thirds, .column-one-third, .column-quarter, .column-one-quarter {
+  padding: 0;
+}
+
+table thead th{
+  font-weight: normal;
+}
+table th:last-child, table td:last-child{
+  padding-right: 20px;
+}
+
+table th:first-child, table td:first-child,{
+  padding-left: 20px;
+}
+
+table th, table td, table tr{
+  text-align: center;
+}
+
+table thead {
+  background-color: $footer-background;
+}
+
+span#step {
+  a {
+  @include inline-block;
+  position: relative;
+
+  @include core-16;
+
+  margin-top: $gutter-half;
+  margin-bottom: $gutter-half;
+  padding-left: 14px;
+
+  color: $black;
+
+  &:link,
+  &:visited,
+  &:hover,
+  a#{&}:focus,
+  &:active {
+    color: $black;
+  }
+
+
+  text-decoration: none;
+  border-bottom: 1px solid $black;
+
+  // Back arrow - left pointing black arrow
+  &::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+
+    border-top: 5px solid transparent;
+    border-right: 6px solid $text-colour;
+    border-bottom: 5px solid transparent;
+
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -6px;
+  }
+}
+
+  // Fallback
+  // IE8 doesn't support rgba and only supports the single colon syntax for :before
+  // IE7 doesn't support pseudo-elements, let's fallback to an image instead.
+  // Ref: http://caniuse.com/#search=%3Abefore, http://caniuse.com/#search=rgba
+  @include ie-lte(8) {
+    background: file-url("icon-arrow-left.png") no-repeat 0 4px;
+  }
+
+}
+
+
+.egar-logout {
+  a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    float: right;
+    font-size: 18px;
+  }
+}
+
+hr.summary
+{
+  clear: both;
+}
+
+.summary-row {
+  clear:both;
+  position: relative;
+
+  button[type="submit"] {
+    left: 33%
+  }
+
+  .summary-field-name {
+    width: 25%;
+    float: left;
+    font-weight: bolder;
+  }
+
+  .summary-data{
+     width: 65%;
+    float: left;
+    position: relative;
+    margin-bottom:20px;
+
+    hr.summary{
+      height: 1px;
+      color: $footer-background;
+      background-color: $footer-background;
+      border: none;
+      margin-top: 0px;
+    }
+
+    .sum-row {
+      display: block;
+      float: left;
+      height: auto;
+      width: 100%;
+    }
+
+    .summary-field-info {
+      width: 49%;
+      float: left;
+      clear: left;
+      padding-bottom:10px;
+      height: auto;
+      display: block;
+    }
+
+    .summary-field-data {
+      width: 45%;
+      font-weight: bolder;
+      padding-left: 10px;
+      padding-bottom:10px;
+      height: auto;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      display: inline-block;
+    }
+
+    .summary-no-data {
+      font-weight: bolder;
+      margin-bottom: 30px;
+    }
+  }
+
+  div.summary-change {
+    width: 10%;
+    float: left;
+    position: relative;
+  }
+
+
+  .collapse{
+    cursor: pointer;
+    display: block;
+    margin-left: 60px;
+    padding-left: 65%;
+    position: relative;
+    bottom: 55px;
+  }
+  .collapse + input{
+    display: none;
+  }
+  .collapse + input + div{
+    display:none;
+  }
+  .collapse + input:checked + div{
+    display:block;
+    position: relative;
+    bottom: 30px;
+  }
+
+  .change-btn {
+    background: none;
+    color: $link-colour;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .list-data{
+    float: left;
+    position: relative;
+    margin-bottom:20px;
+
+    .list-field-info {
+      float: left;
+      clear:left;
+    }
+
+    .list-field-data {
+      float: left;
+      font-weight: bolder;
+      padding-left: 20px;
+      padding-bottom:10px;
+    }
+  }
+}
+
+.fake-button{
+  background-color: $button-background;
+  position: relative;
+  display: -moz-inline-stack;
+  display: inline-block;
+  padding: .526315em .789473em .263157em;
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  -webkit-appearance: none;
+  -webkit-box-shadow: 0 2px 0 $button-shadow;
+  -moz-box-shadow: 0 2px 0 $button-shadow;
+  box-shadow: 0 2px 0 $button-shadow;
+  font-size: 1em;
+  line-height: 1.25;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  color: $button-text !important;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: top;
+}
+
+.fake-button a{
+  color: $button-text !important;
+}
+
+#egar-manage-gars-date-from-group,
+#egar-manage-gars-date-to-group {
+  padding: 0 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.egar-table {
+  width: 100%;
+  margin-bottom: 20px;
+  table-layout: fixed;
+
+  caption{
+    visibility: hidden;
+    }
+
+  th, tr, td{
+    text-align: left;
+  }
+
+  th, tr, td{
+    font-size: 16px;
+    line-height: 1.0;
+  }
+
+  th{
+    font-weight:bold;
+  }
+
+  th{
+    background-color: $footer-background;
+    color: $text-dark;
+  }
+
+    th.hide-header{
+      color: $footer-background;
+  }
+
+  td {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  td.egar-table-person-type {
+    text-transform: capitalize;
+  }
+
+  td.egar-table-actions{
+    color: $footer-text;
+
+    button{
+      margin-right:10px!important;
+      line-height: 1;
+    }
+  }
+
+  .link-button{
+    background:none!important;
+    color:$text-grey;
+    border:none;
+    padding:0!important;
+    margin: 0!important;
+    font: inherit;
+    border-bottom:1px solid $text-grey;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 641px) {
+    #egar-manage-gars-date-from-group,
+    #egar-manage-gars-date-to-group {
+      float: left;
+      width: 50%; }
+    }
+
+li.error-list {
+  list-style: none;
+  text-decoration: underline;
+}
+
+.panel-indent-person {
+  clear: both;
+  border-left: none;
+  padding: 0;
+  margin: 30px 15px 45px 0;
+}
+
+.clear {
+  border-left: none;
+}
+
+.link-button{
+  background:none!important;
+  color: #005ea5;
+  border:none;
+  padding:0!important;
+  margin: 0!important;
+  font: inherit;
+  border-bottom:1px solid #005ea5;
+  cursor: pointer;
+}
+
+.overflow {
+  overflow-wrap: break-word;  
+  word-wrap: break-word;  
+}
+
+@import "mixins/components";

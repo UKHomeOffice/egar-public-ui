@@ -1,0 +1,19 @@
+.form-time {
+    .form-group {
+        float: left;
+        width: 50px;
+
+        margin-right: 20px;
+        margin-bottom: 0;
+        clear: none;
+
+        label {
+            display: block;
+            padding-bottom: 2px;
+        }
+
+        input {
+            width: 100%;
+        }
+    }
+}

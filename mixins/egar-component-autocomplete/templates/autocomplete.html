@@ -1,0 +1,68 @@
+<div id="{{id}}-group" class="form-group{{#compound}} form-group-compound{{/compound}}{{#formGroupClassName}} {{formGroupClassName}}{{/formGroupClassName}}{{#error}} validation-error{{/error}}">
+    <label for="{{id}}" class="{{labelClassName}}">
+        {{#error}}<span class="error-message">{{error.message}}</span>{{/error}}
+        {{{label}}}
+        {{#hint}}<span {{$hintId}}id="{{hintId}}" {{/hintId}}class="form-hint">{{hint}}</span>{{/hint}}
+    </label>
+    {{#fallbackSelect}}
+    <select
+        id="{{id}}"
+        name="{{id}}"
+        class="form-control {{#className}}{{className}}{{/className}} {{#error}}validation-error{{/error}}"
+        {{#attributes}}
+            {{attribute}}="{{value}}"
+        {{/attributes}}>
+        {{#options}}
+            <option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+        {{/options}}
+    </select>
+    {{/fallbackSelect}}
+    {{#fallbackTextbox}}
+    <input
+        type="{{type}}"
+        name="{{id}}"
+        id="{{id}}"
+        class="form-control {{#className}}{{className}}{{/className}} {{#error}}invalid-input{{/error}}"
+        aria-required="{{required}}"
+        {{#value}} value="{{value}}"{{/value}}
+        {{#min}} min="{{min}}"{{/min}}
+        {{#max}} max="{{max}}"{{/max}}
+        {{#maxlength}} maxlength="{{maxlength}}"{{/maxlength}}
+        {{#pattern}} pattern="{{pattern}}"{{/pattern}}
+        {{#hintId}} aria-describedby="{{hintId}}"{{/hintId}}
+        {{#error}} aria-invalid="true"{{/error}}
+        {{#autocomplete}} autocomplete="{{autocomplete}}"{{/autocomplete}}
+        {{#attributes}}
+            {{attribute}}="{{value}}"
+        {{/attributes}}
+    >
+    {{/fallbackTextbox}}
+</div>
+<script>
+    var initEnhancedSelect = function() {
+        var enhance = window.HOF && window.HOF.accessibleAutocomplete && window.HOF.accessibleAutocomplete.enhance;
+        /*eslint-disable*/
+        var options = '{{#options}}{{label}};{{/options}}';
+        options = options.replace(/&#(\d+);/g, function(match, dec) {
+            return String.fromCharCode(dec);
+        });
+        options = options === '' ? [] : options.split(';');
+        /*eslint-enable*/
+        if(enhance){
+            enhance(
+                /*id*/ '{{id}}',
+                /* fallbackSelect */'{{fallbackSelect}}' === 'true',
+                /*minLength*/ parseInt('{{minSearchLength}}'),
+                /*searchUri*/ '{{searchUri}}',
+                /*showAllValues*/ '{{showAllValues}}' === 'true',
+                options
+            );
+        }
+    };
+
+    if(window.addEventListener) {
+        window.addEventListener('load', initEnhancedSelect, false);
+    } else if(window.attachEvent) {
+        window.attachEvent('onload', initEnhancedSelect);
+    }
+</script>

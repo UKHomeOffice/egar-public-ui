@@ -1,0 +1,14 @@
+@import "node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.css";
+
+.autocomplete__dropdown-arrow-down {
+    pointer-events: none;
+    z-index: auto;
+}
+
+.autocomplete__wrapper {
+    width: 100%;
+
+    @include media(tablet) {
+        width: 50%;
+    }
+}

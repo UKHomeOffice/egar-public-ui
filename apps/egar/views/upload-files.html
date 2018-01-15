@@ -1,0 +1,65 @@
+{{<partials-columns}}
+{{$encoding}}enctype="multipart/form-data"{{/encoding}}
+  {{$page-content}}
+
+
+
+  <p>Uploading supporting files is optional</p><ul class="list list-bullet"><li>The maximum size is 10MB</li><li>The maximum number of files that can be uploaded is 5</li><li>The following file types can be supported: PDF, JPG, PNG, DOC, DOCX, XLS and XLSX</li></ul>
+     {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    {{#fields}}
+        {{#renderField}}{{/renderField}}
+    {{/fields}}
+    {{#afterFields}}
+        {{afterFields}}
+    {{/afterFields}}
+
+    {{#values}}
+
+    <br />
+    {{<partials-submit-buttons}}
+    {{/partials-submit-buttons}}
+    <br />
+
+
+    {{#error}}
+    <div class="validation-error">
+        <span class="error-message">{{error.reason}}</span>
+    </div>
+    {{/error}}
+        <table class="egar-table">
+            <caption>List of supporting files</caption>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">File name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            {{#files}}
+                {{#file}}
+                <tr>
+                    <td>{{count}}</td>
+                    <td>{{file_name}}</td>
+                    <td>{{file_status}}</td>
+                    <td class="egar-table-actions">
+                    <button type="submit" value="delete:{{file_uuid}}" name="delete" class="link-button">Remove</button>
+                    </td>
+                </tr>
+                {{/file}}
+            {{/files}}
+            {{^files}}
+            <tr>
+                <td colspan="4">There are no records available</td>
+            </tr>
+            {{/files}}
+        </table>
+        <br />
+        {{#continueButton}}
+            <input type="submit" {{#id}}id="id"{{/id}} value="{{{value}}}" name="{{name}}" class="button">
+        {{/continueButton}}
+    {{/values}}
+
+  {{/page-content}}
+
+{{/partials-columns}}

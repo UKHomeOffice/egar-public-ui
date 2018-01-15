@@ -1,0 +1,7 @@
+{
+    "UPLOADING": "Pending",
+    "UPLOAD_FAILED": "Failed",
+    "AWAITING_VIRUS_SCAN": "Pending",
+    "VIRUS_SCANNED": "Ready",
+    "QUARANTINED": "Quarantined"
+}

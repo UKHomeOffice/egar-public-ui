@@ -1,0 +1,71 @@
+{
+  "home": {
+    "header": "General Aviation Report (GAR)"
+  },
+  "manage-gars": {
+    "header": "Manage my GARs"
+  },
+  "aircraft": {
+      "header": "Aircraft details"        
+    },
+    "departure": {
+      "header": "Departure details"
+    },
+    "arrival": {
+      "header": "Arrival details"
+    },
+    "goods": {
+      "header": "Are there any hazardous or prohibited goods on board?"
+    },
+    "people": {
+      "header": "Adding Captain, Crew and Passengers"
+    },
+    "person-existing":{
+        "header": "Add previously entered Captain, Crew and Passengers"
+    },
+    "person-type": {
+      "header": "Select the type of person you wish to add to this flight"
+    },
+    "captain-general": {
+      "header": "Information about the captain"
+    },
+    "captain-birth": {
+      "header": "Information about the captain"
+    },
+    "captain-travel": {
+      "header": "Information about the captain"
+    },
+    "captain-responsible": {
+      "header": "Please specify who is responsible for goods and people on this flight?"
+    },
+    "crew-general": {
+      "header": "Information about the crew"
+    },
+    "crew-birth": {
+      "header": "Information about the crew"
+    },
+    "crew-travel": {
+      "header": "Information about the crew"
+    },
+    "passenger-general": {
+      "header": "Information about the passenger"
+    },
+    "passenger-birth": {
+      "header": "Information about the passenger"
+    },
+    "passenger-travel": {
+      "header": "Information about the passenger"
+    },
+    "supporting-files": {
+      "header": "Would you like to add any supporting files to accompany your GAR submission?"
+    },
+    "upload-files":{
+      "header": "Upload supporting files"
+    },
+    "submit": {
+      "header": "Submit GAR"
+    },
+    "complete": {
+      "header": "General Aviation Report (GAR)"
+    }
+}

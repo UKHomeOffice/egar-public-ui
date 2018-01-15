@@ -1,0 +1,320 @@
+{
+    "egar-aircraft-registration": {
+        "label": "Aircraft registration",
+        "hint": "Enter aircraft registration details without hypens or special characters",
+        "validation": {
+            "alphanum": "Please enter a valid aircraft registration"
+        }
+    },
+    "egar-aircraft-type": {
+        "label": "Type of aircraft"
+    },
+    "egar-aircraft-base": {
+        "label": "Usual base of aircraft",
+        "hint": "ICAO or the name of the location including country"
+    },
+    "egar-aircraft-taxes-paid": {
+        "legend": "Have all taxes due on the aircraft been paid and accounted for within the EU?",
+        "options": {
+            "true": {
+                "label": "Yes"
+            },
+            "false": {
+                "label": "No"
+            }
+        }
+    },
+    "egar-departure-date": {
+        "legend": "Date of departure",
+        "hint": "For example, 20 01 2018",
+        "validation": {
+            "validateDate": "Please enter a departure date/time in the future"
+        },
+        "parts": {
+            "day": {
+                "label": "Day"
+            },
+            "month": {
+                "label": "Month"
+            },
+            "year": {
+                "label": "Year"
+            }
+        }
+    },
+    "egar-departure-time": {
+        "legend": "Time of departure",
+        "hint": "Enter time in UTC (Coordinated Universal Time)",
+        "validation": {
+            "regex": "Please enter a valid time"
+        },
+        "parts": {
+            "hour": {
+                "label": "Hour"
+            },
+            "minute": {
+                "label": "Minute"
+            }
+        }
+    },
+    "egar-departure-icao": {
+        "label": "Departure ICAO code",
+        "validation": {
+            "isValidCode": "Please enter a valid departure ICAO code",
+            "validateLocation": "Please only enter one location"            
+        }
+    },
+    "egar-departure-no-icao": {
+        "summary": "I don't know the exact departure ICAO code"
+    },
+    "egar-departure-location": {
+        "options": {
+            "lat-long": {
+                "label": "Latitude and longitude"
+            },
+            "iata": {
+                "label": "IATA code"
+            }
+        }
+    },
+    "egar-departure-latitude": {
+        "label": "Departure latitude",
+        "hint": "Please enter as decimal DD.XX or N/SDDMM",
+        "validation": {
+            "regex": "Please enter a valid latitude"
+        }
+    },
+    "egar-departure-longitude": {
+        "label": "Departure longitude",
+        "hint": "Please enter as decimal DD.XX or E/WDDMM",
+        "validation": {
+            "regex": "Please enter a valid longitude"
+        }
+    },
+    "egar-departure-iata": {
+        "label": "Departure IATA code",
+        "validation": {
+            "isValidCode": "Please enter a valid departure IATA code"            
+        }
+    },
+    "egar-arrival-date": {
+        "legend": "Date of arrival",
+        "hint": "For example, 20 01 2018",
+        "validation": {
+            "validateDate": "Please enter an arrival date/time in the future"
+        },
+        "parts": {
+            "day": {
+                "label": "Day"
+            },
+            "month": {
+                "label": "Month"
+            },
+            "year": {
+                "label": "Year"
+            }
+        }
+    },
+    "egar-arrival-time": {
+        "legend": "Time of arrival",
+        "hint": "Enter time in UTC (Coordinated Universal Time)",
+        "validation": {
+            "regex": "Please enter a valid time"
+        },
+        "parts": {
+            "hour": {
+                "label": "Hour"
+            },
+            "minute": {
+                "label": "Minute"
+            }
+        }
+    },
+    "egar-arrival-icao": {
+        "label": "Arrival ICAO code",
+        "validation": {
+            "isValidCode": "Please enter a valid departure ICAO code",
+            "validateLocation": "Please only enter one location"            
+        }
+    },
+    "egar-arrival-no-icao": {
+        "summary": "I don't know the exact arrival ICAO code"
+    },
+    "egar-arrival-location": {
+        "options": {
+            "lat-long": {
+                "label": "Latitude and longitude"
+            },
+            "iata": {
+                "label": "IATA code"
+            }
+        }
+    },
+    "egar-arrival-latitude": {
+        "label": "Arrival latitude",
+        "hint": "Please enter as decimal DD.XX or N/SDDMM",
+        "validation": {
+            "regex": "Please enter a valid latitude"
+        }
+    },
+    "egar-arrival-longitude": {
+        "label": "Arrival longitude",
+        "hint": "Please enter as decimal DD.XX or E/WDDMM",
+        "validation": {
+            "regex": "Please enter a valid longitude"
+        }
+    },
+    "egar-arrival-iata": {
+        "label": "Arrival IATA code",
+        "validation": {
+            "isValidCode": "Please enter a valid arrival IATA code"              
+        }
+    },
+    "egar-goods-expander": {
+        "summary": "What items are classified as dangerous or hazardous",
+        "details": "<p>This includes firearms, explosives, chemicals, compressed gas cannisters.</p>"
+    },
+    "egar-goods-declaration": {
+        "options": {
+            "true": {
+                "label": "Yes"
+            },
+            "false": {
+                "label": "No"
+            }
+        }
+    },
+    "egar-person-type": {
+        "options": {
+            "captain": {
+                "label": "Captain"
+            },
+            "crew": {
+                "label": "Crew"
+            },
+            "passenger": {
+                "label": "Passenger"
+            }
+        },
+        "validation": {
+            "required": "Please select a person"
+        }
+    },
+    "egar-person-given-name": {
+        "label": "Given name(s)"
+    },
+    "egar-person-family-name": {
+        "label": "Family Name"
+    },
+    "egar-person-gender": {
+        "legend": "Gender",
+        "options": {
+            "female": {
+                "label": "Female"
+            },
+            "male": {
+                "label": "Male"
+            },
+            "unspecified": {
+                "label": "Unspecified"
+            }
+        }
+    },
+    "egar-person-uk-address": {
+        "label": "UK home address or address visiting in UK"
+    },
+    "egar-person-dob": {
+        "legend": "Date of birth",
+        "hint": "For example, 01 01 2018",
+        "parts": {
+            "day": {
+                "label": "Day"
+            },
+            "month": {
+                "label": "Month"
+            },
+            "year": {
+                "label": "Year"
+            }
+        },
+        "validation": {
+            "validateDate": "Please enter a valid date of birth"
+        }
+    },
+    "egar-person-birth-place": {
+        "label": "Place of birth",
+        "hint": "As shown in travel document"
+    },
+    "egar-person-nationality-country": {
+        "label": "Country of nationality"
+    },
+    "egar-person-travel-document-type": {
+        "legend": "Travel document type",
+        "options": {
+            "passport": {
+                "label": "Passport"
+            },
+            "idcard": {
+                "label": "Identity Card"
+            },
+            "unspecified": {
+                "label": "Unspecified"
+            }
+        }
+    },
+    "egar-person-travel-document-number": {
+        "label": "Travel document number (if available)"
+    },
+    "egar-person-travel-document-expiry": {
+        "legend": "Travel document expiry date",
+        "hint": "For example, 01 01 2018",
+        "parts": {
+            "day": {
+                "label": "Day"
+            },
+            "month": {
+                "label": "Month"
+            },
+            "year": {
+                "label": "Year"
+            }
+        },
+        "validation": {
+            "validateDate": "Please enter a valid expiry date"
+        }
+    },
+    "egar-person-travel-document-country": {
+        "label": "Travel document issuing country"
+    },
+    "egar-person-responsible": {
+        "legend": "",
+        "options": {
+            "captain": {
+                "label": "Captain"
+            },
+            "other": {
+                "label": "Other"
+            }
+        }
+    },
+    "egar-person-responsible-name": {
+        "label": "Name of responsible person"
+    },
+    "egar-person-responsible-number": {
+        "label": "Contact number of responsible person"
+    },
+    "egar-supporting-files-expander": {
+        "summary": "What types of files could I upload to support my GAR submission?",
+        "details": "<p>Supporting documents may include documents such as</p><ul><li>Firearms certificates</li><li>Remote clearance forms</li></ul>"
+    },
+    "egar-supporting-files": {
+        "options": {
+            "true": {
+                "label": "Yes"
+            },
+            "false": {
+                "label": "No"
+            }
+        }
+    }
+}

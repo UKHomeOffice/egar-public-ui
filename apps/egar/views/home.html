@@ -1,0 +1,34 @@
+{{<partials-columns}}
+{{$page-content}}
+{{#beforeFields}}
+   {{beforeFields}}
+{{/beforeFields}}
+{{#fields}}
+   {{#renderField}}{{/renderField}}
+{{/fields}}
+{{#afterFields}}
+   {{afterFields}}
+{{/afterFields}}
+
+  <h3><button type="submit" name="submit-a-gar" value="submit-a-gar" name="submit"  class="link-button">Submit a GAR</button></h3>
+  <p>Submit a new GAR for each leg of your journey with 4 hours notice for flights from Europe and 12 hours notice for flights within the CTA.</p>
+  <hr class="summary" />
+
+  <h3><button type="submit" name="manage-gars" value="manage-gars" name="submit"  class="link-button">Manage a GAR</button></h3>
+  <p>Notify Border Force and Special Branch of changes or cancel your GAR up to 1 hour after take off.</p>
+  <hr class="summary" />
+
+{{/page-content}}
+
+{{$layoutColumnOneThird}}
+{{#values}}
+<nav role="navigation">
+  <li class="overflow"><p>Signed in as: {{name}}</p></li>
+  <li><h3>My account</h3></li>
+  <li><a href="{{detailsLink}}">My details</a></li>
+  <ul class="list sidebar"></ul>
+</nav>
+{{/values}}
+{{/layoutColumnOneThird}}
+
+{{/partials-columns}}

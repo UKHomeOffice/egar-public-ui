@@ -1,0 +1,16 @@
+{
+    "egarPassengerAdd": "Add new",
+    "egarPassengerDelete": "Delete",
+    "egarPassengerExisting":"Use existing",
+    "continue": "Save and continue",
+    "start": "Start   >",
+    "submit-gar": "Submit GAR",
+    "save-as-draft": "Save as draft",
+    "search": "Search",
+    "add-new": "Add new",
+    "use-existing": "Use existing",
+    "cancel-gar": "Cancel GAR",
+    "return": "Return to Manage my GARs",
+    "skip": "Skip and continue",
+    "upload-file": "Upload file"
+}

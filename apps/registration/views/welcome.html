@@ -1,0 +1,41 @@
+{{<partials-columns}}
+
+  {{$page-content}}
+    <p>Use this service to:</p>
+    <ul class="list list-bullet">
+      <li>submit a GAR</li>
+      <li>view, edit or cancel a GAR</li>
+      <li>add, manage or remove people on your flight</li>
+    </ul>
+    <p>You'll need the following:</p>
+    <ul class="list list-bullet">
+      <li>aircraft details (including registration number and base)</li>
+      <li>arrival and departure details (date, location and scheduled times)</li>
+      <li>name and telephone number of the person responsible for goods on board</li>
+      <li>aircraft tax information (whether taxes have been paid and accounted for in the EU)</li>
+      <li>captain, crew and passenger details (including travel documents and UK visiting address)</li>
+    </ul>
+
+    {{#input-submit}}start-now{{/input-submit}}
+    <h2>Other ways to submit a GAR</h2>
+    <h3>By email</h3>
+    <!-- TODO: Update the GAR form link when it is available -->
+    <p>Send the <a href="https://www.gov.uk">General Aviation Report form</a>, to the national co-ordination unit (NCU) to send to Border Force or the police.</p>
+    <p>Use the title: &apos;GAR, airfield registration, name of airfield, airfield location (if known)&apos;.</p>
+    <h3>By Phone - In an emergency only</h3>
+    <p>+44 (0) 845 723 1110</p>
+  {{/page-content}}
+
+  {{$layoutColumnOneThird}}
+    <nav role="navigation">
+      <ul class="list sidebar">
+        <li><a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/412944/GAR_Instructions_March_2015.pdf">General aviation report guidance</a></li>
+        <li><a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/380032/border_force_expectations_of_airfiield_operators.pdf">Border force expectations of airfield operators</a></li>
+        <!-- TODO: Update the 'Check if you need to submit a GAR' link when it is available -->
+        <li><a href="https://www.gov.uk">Check if you need to submit a GAR</a></li>
+        <li><a href="https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/408958/6_478_Aviation_poster.pdf">Emergency general aviation report (GAR) telephone line</a></li>
+      </ul>
+    </nav>
+  {{/layoutColumnOneThird}}
+
+{{/partials-columns}}

@@ -1,0 +1,13 @@
+{
+  "theme": "govuk",
+  "routes": [
+    "./apps/registration",
+    "./apps/egar"
+  ],
+  "session": {
+    "name": "egar-public-ui.hof.sid",
+    "#secret": "supersecret"
+  },
+  "#loglevel": "debug",
+  "#env": "production"
+}

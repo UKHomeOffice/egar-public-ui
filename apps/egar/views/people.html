@@ -1,0 +1,54 @@
+{{<partials-fullwidth}}
+
+  {{$page-content}}
+     {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    <p>You must add details for the captain, crew and passengers on board this flight. You can reuse existing personal data from your previous General Aviation Reports that have been submitted within the last 12 months.</p>
+    {{#values}}
+
+      <table class="egar-table">
+        <caption>List of people on flight</caption>
+        <tr>
+           <!-- <th scope="col" class="hide-header">Selected</th>-->
+            <th scope="col">Type</th>
+            <th scope="col">Given name(s)</th>
+            <th scope="col">Family name(s)</th>
+            <th scope="col">Date of birth</th>
+            <th scope="col">Travel document number</th>
+            <th scope="col">Expiry date</th>
+            <th scope="col">Actions</th>
+        </tr>
+        {{#people}}
+        <tr>
+          <!--   <td> TO DO - need to be implemented after UX design
+                <input type="checkbox"  />
+            </td> -->
+            <td class="egar-table-person-type">{{type}}</td>
+            {{#details}}
+            <td>{{given_name}}</td>
+            <td>{{family_name}}</td>
+            <td>{{dobPrettyPrint}}</td>
+            <td>{{document_no}}</td>
+            <td>{{ documentExpiryDatePrettyPrint}}</td>
+            {{/details}}
+            <td class="egar-table-actions">
+              <button type="submit" name="edit:{{type}}:{{person_uuid}}" value="Edit" name="submit" class="link-button" />Edit</button>
+              <button type="submit" name="delete:{{type}}:{{person_uuid}}" value="Delete" name="submit" class="link-button">Delete</button>
+            </td>
+        </tr>
+        {{/people}}
+        {{^people}}
+        <tr>
+          <td colspan="7">There are no records available</td>
+        </tr>
+        {{/people}}
+      </table>
+
+    {{/values}}
+
+    {{<partials-submit-buttons}}
+    {{/partials-submit-buttons}}
+  {{/page-content}}
+
+{{/partials-fullwidth}}

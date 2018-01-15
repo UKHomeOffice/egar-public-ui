@@ -1,0 +1,33 @@
+{{<partials-columns}}
+{{$page-content}}
+<div class="alert-complete" role="alert">
+    <div class="alert-message">
+        <h1>Submission complete</h1>
+        <p>Your reference number is</p>
+        {{#values}}
+      <h3>{{submission.external_ref}}</h3>
+        {{/values}}
+    </div>
+  </div>
+  <p>Your General Aviation Report has been submitted successfully. A confirmation email has been sent to your registered email account with the above GAR submission reference.</p>
+  <p>Please retain this reference as evidence of your GAR submission.</p>
+<!-- <p><a href="#">Bookmark this page</a></p>
+<p><a href="#">Print this page</a></p>
+<p><a href="#">Save as pdf</a></p> -->
+<br />
+
+<h3>What happens next?</h3>
+<p>The data that you have provided in your GAR has been submitted to the UK authorities. <br />You will get an email with your GAR reference and submission confirmation</p>
+<p><a href="#">What did you think of this service?</a> (takes 30 seconds)</p>
+{{/page-content}}
+
+{{$layoutColumnOneThird}}
+{{#values}}
+<nav role="navigation" class="nav-confirm">
+  <li><a href="home">GAR home</a></li>
+  <li><a href="manage-gars">Manage GARs</a></li>
+</nav>
+{{/values}}
+{{/layoutColumnOneThird}}
+
+{{/partials-columns}}

@@ -1,0 +1,34 @@
+pipeline:
+  build_docker_image:
+    image: docker:stable-dind
+    privileged: true
+    when:
+      branch: [master, develop]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - ./docker-build.sh egar-public-ui
+  notify_slack:
+    image: plugins/slack
+    webhook: https://hooks.slack.com/services/$(SLACK_WEBHOOK)
+    channel: builds
+    when:
+      status: [success, failure]
+  deploy_docker_latest_image:
+    image: docker:stable-dind
+    privileged: true
+    when:
+      branch: [develop]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - ./docker-deploy-latest.sh egar-public-ui
+  deploy_docker_version_image:
+    image: docker:stable-dind
+    privileged: true
+    when:
+      branch: [master]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - ./docker-deploy-version.sh egar-public-ui

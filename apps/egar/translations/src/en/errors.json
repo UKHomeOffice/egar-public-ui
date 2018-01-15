@@ -1,0 +1,60 @@
+{
+    "default": {
+        "message": "There was a problem processing your request, please try again.",
+        "title": "Something went wrong"
+    },
+    "submission-failed": "The GAR submission failed.",
+    "submission-timeout": "The GAR submission is still pending you will be notified by e-mail when it is complete.",
+    "cancellation-failed": "The GAR cancellation failed.",
+    "cancellation-timeout": "The GAR cancellation is still pending you will be notified by e-mail when it is complete.",
+    "cancellation-error": "The GAR cancellation cannot be completed.",
+
+    "aircraft-error": " Aircraft details",
+    "aircraft-registration": "You must enter an aircraft registration",
+    "aircraft-type": "You must enter a type of aircraft",
+    "aircraft-base": "You must enter the aircrafts usual base",
+    "aircraft-taxesPaid": "You must identify whether or not aircraft taxes have been paid",
+
+    "departure-error": "Departure details",
+    "departure-date": "You must enter the date of departure",
+    "departure-time": "You must enter the time of departure",
+    "departure-location": "You must enter the departure location",
+
+    "arrival-error": "Arrival details",
+    "arrival-date": "You must enter the date of arrival",
+    "arrival-time": "You must enter the time of arrival",
+    "arrival-location": "You must enter the arrival location",
+
+    "hazardous-error": "Hazardous goods",
+    "hazardous-goods": " You must identify whether or not there are any hazardous goods on board this flight",
+
+    "captain-error": "Captain details",
+    "crew-error": "Crew details",
+    "passengers-error": "Passenger details",
+
+    "no-captain-error": "You must add a captain",
+    "given_name": "You must enter a given name",
+    "family_name": "You must enter a family name",
+    "dob": "You must enter your date of birth",
+    "place": "You must enter a place of birth",
+    "nationality": "You must enter a country of nationality",
+    "document_type": "You must enter a travel document type",
+    "document_no": "You must enter a travel document number",
+    "document_expiryDate": "You must enter a travel document expiry date",
+    "document_issuingCountry": "You must enter a travel document issuing country",
+
+    "responsible-person-type": "You must enter the responsible person",
+    "responsible-person-name": "You must enter the name of the responsible person",
+    "responsible-person-number": "You must enter the contact number of the responsible person",
+
+    "departure-future-date": "You must enter a date/time of departure that is in the future",
+    "arrival-future-date": "You must enter a date/time of arrival that is in the future",
+    "departure-arrival-date-error": "Your date/time of arrival must be after your date/time of departure",
+    "departure-arrival-location-error": "Your arrival location must be different to your departure location",
+
+    "file-upload-error": "Could not upload your file as it did not meet requirements",
+    "upload-error": "Supporting documents",
+    "file-virus": "One or more of your documents has failed a virus scan. Check your uploaded files and try again",
+    "file-pending": "You cannot proceed until all of your files have been uploaded",
+    "file-error": "One or more of your documents has failed to upload"
+}
