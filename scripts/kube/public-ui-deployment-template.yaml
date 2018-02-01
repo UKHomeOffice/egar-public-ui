@@ -1,0 +1,64 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: public-ui
+  name: public-ui
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: public-ui
+    spec:
+      containers:
+      - args:
+        - --egar-workflow-api-url=http://$(WORKFLOW_API_SERVICE_HOST):$(WORKFLOW_API_SERVICE_PORT)/api/v1
+        image: pipe.egarteam.co.uk/egar-public-ui:$PUBLIC_UI_VER
+        name: public-ui
+        resources: {}
+      - args:
+        - --discovery-url=http://auth.egarteam.co.uk/auth/realms/egar
+        - --client-id=$(CLIENT_ID)
+        - --client-secret=$(CLIENT_SECRET)
+        - --listen=0.0.0.0:8010
+        - --encryption-key=$(ENCRYPT_KEY)
+        - --upstream-url=http://localhost:8080
+        - --resources=uri=/egar*|roles=uma_authorization
+        - --secure-cookie=false
+        - --add-claims=given_name
+        - --add-claims=family_name
+        - --add-claims=iss
+        - --enable-logging=true
+        - --enable-refresh-tokens=true
+        - --upstream-response-header-timeout=50s
+        - --upstream-timeout=50s
+        - --upstream-keepalive-timeout=50s
+        - --upstream-expect-continue-timeout=50s
+        - --redirection-url=http://develop.egarteam.co.uk
+        env:
+          - name: CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: egar-secret
+                key: clientid
+          - name: CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: egar-secret
+                key: clientsecret
+          - name: ENCRYPT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: egar-secret
+                key: enckey
+        image: quay.io/gambol99/keycloak-proxy
+        name: public-ui-proxy
+        ports:
+        - containerPort: 8010
+        resources: {}
+      restartPolicy: Always
+status: {}
+
