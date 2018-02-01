@@ -1,7 +1,7 @@
 pipeline:
   build_docker_image:
     image: docker:17.09.0-ce
-    privileged: true
+    privileged: false
     when:
       branch: [master, develop]
     environment:
@@ -10,7 +10,7 @@ pipeline:
       - ./docker-build.sh egar-public-ui
   deploy_docker_latest_image:
     image: docker:17.09.0-ce
-    privileged: true
+    privileged: false
     when:
       branch: [develop]
     environment:
@@ -19,7 +19,7 @@ pipeline:
       - ./docker-deploy-latest.sh egar-public-ui
   deploy_docker_version_image:
     image: docker:17.09.0-ce
-    privileged: true
+    privileged: false
     when:
       branch: [master]
     environment:
