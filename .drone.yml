@@ -8,15 +8,6 @@ pipeline:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - ./docker-build.sh egar-public-ui
-  deploy_docker_latest_image:
-    image: docker:17.09.0-ce
-    privileged: false
-    when:
-      branch: [develop]
-    environment:
-      - DOCKER_HOST=tcp://172.17.0.1:2375
-    commands:
-      - ./docker-deploy-latest.sh egar-public-ui
   deploy_docker_version_image:
     image: docker:17.09.0-ce
     privileged: false
