@@ -8,12 +8,14 @@ pipeline:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - ./docker-build.sh egar-public-ui
-  deploy_docker_version_image:
+  image_to_quay:
     image: docker:17.09.0-ce
+    secrets:
+      - docker_password
     privileged: false
     when:
       branch: [master]
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - ./docker-deploy-version.sh egar-public-ui
+      - ./docker-deploy.sh egar-public-ui
