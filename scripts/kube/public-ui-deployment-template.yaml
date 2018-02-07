@@ -16,7 +16,21 @@ spec:
       containers:
       - args:
         - --egar-workflow-api-url=http://$(WORKFLOW_API_SERVICE_HOST):$(WORKFLOW_API_SERVICE_PORT)/api/v1
-        image: pipe.egarteam.co.uk/egar-public-ui:$PUBLIC_UI_VER
+        - --file-upload-storage-type=s3
+        - --file-upload-secret-access-key=/$(UI_S3_SECRET_KEY)
+        - --file-upload-access-key-id=$(UI_S3_ACCESS_KEY)
+        env:
+          - name: UI_S3_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: egar-secret
+                key: uis3seckey
+          - name: UI_S3_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: egar-secret
+                key: uis3ackey
+        image: quay.io/ukhomeofficedigital/egar-public-ui:$PUBLIC_UI_VER
         name: public-ui
         resources: {}
       - args:
