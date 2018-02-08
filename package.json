@@ -58,7 +58,7 @@
     "witch": "^1.0.3"
   },
   "name": "egar-public-ui",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "main": "index.js",
   "keywords": [],
   "author": "",

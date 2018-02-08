@@ -4,25 +4,27 @@
   {{/journeyHeader}}
 
   {{$validationSummary}}
+    <div class="column-two-thirds">
     {{> partials-validation-summary}}
+    </div>
   {{/validationSummary}}
 
   {{$propositionHeader}}
     {{> partials-navigation}}
   {{/propositionHeader}}
 
-  {{$content}} 
+  {{$content}}
     <div class="column-two-thirds">
       <h1>{{{title}}}</h1>
       {{<partials-form}}
-        {{$form}}      
+        {{$form}}
           {{$page-content}}{{/page-content}}
         {{/form}}
-      {{/partials-form}}  
+      {{/partials-form}}
     </div>
-    <div class="column-one-third add-title-margin">  
-      {{$layoutColumnOneThird}}{{/layoutColumnOneThird}} 
-    </div>  
+    <div class="column-one-third add-title-margin">
+      {{$layoutColumnOneThird}}{{/layoutColumnOneThird}}
+    </div>
   {{/content}}
 
 {{/layout}}

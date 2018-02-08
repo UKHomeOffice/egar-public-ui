@@ -56,5 +56,9 @@
     "upload-error": "Supporting documents",
     "file-virus": "One or more of your documents has failed a virus scan. Check your uploaded files and try again",
     "file-pending": "You cannot proceed until all of your files have been uploaded",
-    "file-error": "One or more of your documents has failed to upload"
+    "file-error": "One or more of your documents has failed to upload",
+
+    "max-files": "You have reached a maximum number of supporting files that can be uploaded to accompany your GAR",
+    "max-file-size": "The file that you have just tried to upload has exceeded the maximum size of 10MB",
+    "file-format": "The file that you have tried to upload is in a file format that is currently not supported"
 }

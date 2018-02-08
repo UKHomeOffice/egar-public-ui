@@ -2,7 +2,20 @@
 {{$encoding}}enctype="multipart/form-data"{{/encoding}}
   {{$page-content}}
 
-
+  {{#values}}
+  {{#hasPendingFiles}}
+      <meta http-equiv="refresh" content="{{metaRefreshTime}}"/>
+  {{/hasPendingFiles}}
+  {{#error}}
+  <div class="error-summary" role="group" aria-labelledby="error-summary-heading-example-1" tabindex="-1">
+      <h1 class="heading-medium error-summary-heading">
+          There was a problem
+      </h1>
+      <ul class="error-message">
+          <li class="error-list">{{error}}</li>
+      </ul>
+  </div>
+  {{/error}}
 
   <p>Uploading supporting files is optional</p><ul class="list list-bullet"><li>The maximum size is 10MB</li><li>The maximum number of files that can be uploaded is 5</li><li>The following file types can be supported: PDF, JPG, PNG, DOC, DOCX, XLS and XLSX</li></ul>
      {{#beforeFields}}
@@ -15,20 +28,13 @@
         {{afterFields}}
     {{/afterFields}}
 
-    {{#values}}
 
     <br />
     {{<partials-submit-buttons}}
     {{/partials-submit-buttons}}
     <br />
 
-
-    {{#error}}
-    <div class="validation-error">
-        <span class="error-message">{{error.reason}}</span>
-    </div>
-    {{/error}}
-        <table class="egar-table">
+            <table class="egar-table">
             <caption>List of supporting files</caption>
             <tr>
                 <th scope="col"></th>

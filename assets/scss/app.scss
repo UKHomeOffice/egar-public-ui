@@ -369,6 +369,12 @@ li.error-list {
   border-left: none;
 }
 
+.panel-indent {
+  ul {
+  padding: 0 0 0 15px;
+  }
+}
+
 .link-button{
   background:none!important;
   color: #005ea5;

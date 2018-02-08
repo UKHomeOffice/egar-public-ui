@@ -610,7 +610,10 @@
                 {{/summary.showChange}}
             </div>
 
-            <hr class="summary" />
+        <hr class="summary" />
+        {{#hasPendingFiles}}
+            <meta http-equiv="refresh" content="{{metaRefreshTime}}"/>
+        {{/hasPendingFiles}}
 
             <div class="summary-row">
                 <div class="summary-field-name">Supporting documents</div>

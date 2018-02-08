@@ -366,7 +366,7 @@ module.exports = {
         '/submit': {
             next: '/complete',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetPersonGuard, SubmitController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, SubmitController],
             backLink: 'summary'
         },
         '/complete': {

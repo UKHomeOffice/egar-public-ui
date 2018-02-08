@@ -23,6 +23,7 @@ module.exports = UnsetFilesGuard => class extends UnsetFilesGuard {
      */
     configure(req, res, next) {
         req.sessionModel.unset('supportingFiles');
+        req.sessionModel.unset('fileUploadError');
         next();
     }
 };

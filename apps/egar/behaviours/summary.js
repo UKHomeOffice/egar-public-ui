@@ -6,8 +6,9 @@ const moment = require('moment');
 /* eslint-disable  implicit-dependencies/no-implicit */
 const countries = require('country-list');
 
-const config = require('../../../config');
+const config = require('../../../config')();
 const MAX_SUBMISSION_POLLS = config['max-submission-polls'];
+const PENDING_FILE_STATES = ['UPLOADING', 'AWAITING_VIRUS_SCAN'];
 
 /**
  * The FormController behaviours for the Summary page
@@ -59,11 +60,7 @@ module.exports = SummaryController => class extends SummaryController {
         const summaryMode = req.sessionModel.get('summaryMode');
         const summaryErrors = req.sessionModel.get('garErrors');
 
-        // Show errors if:
-        // - the summary page has been redirected to because of a problem submitting the GAR
-        // - the summary mode is cancel
-        const showErrors = (req.get('referrer') && req.get('referrer').includes('/egar/submit'))
-            || summaryMode === 'cancel';
+        const showErrors = summaryMode !== 'view';
 
         this.service.getSummaryDetails(req, garUuid)
             .then(summaryDetails => {
@@ -362,12 +359,18 @@ module.exports = SummaryController => class extends SummaryController {
         summary.filesExist = false;
         if (!_.isNil(summaryDetails.files)) {
             summary.files = [];
+            summary.hasPendingFiles = false;
+            summary.metaRefreshTime = config['meta-refresh-time'];
 
             for (let i = 0; i < summaryDetails.files.length; i++) {
                 summary.filesExist = true;
                 let isLast = false;
                 if (i === summaryDetails.files.length - 1) {
                     isLast = true;
+                }
+
+                if (PENDING_FILE_STATES.includes(summaryDetails.files[i].file_status)) {
+                    summary.hasPendingFiles = true;
                 }
 
                 let file = {

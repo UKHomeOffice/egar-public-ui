@@ -18,12 +18,12 @@
       <span id="step">
         {{> partials-back}} <span>{{$step}}{{/step}}</span>
       </span>
-      <div class="grid-row" id="content">         
-          
+      <div class="grid-row" id="content">
+          <!--{{$validationSummary}}{{/validationSummary}}-->
           {{$content}}{{/content}}
 
-        </div>       
-     
+        </div>
+
       {{> partials-gatag}}
       <script type="text/javascript" src="{{assetPath}}/js/bundle.js"></script>
     </main>

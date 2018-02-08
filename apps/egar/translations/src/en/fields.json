@@ -61,11 +61,12 @@
         "label": "Departure ICAO code",
         "validation": {
             "isValidCode": "Please enter a valid departure ICAO code",
-            "validateLocation": "Please only enter one location"            
+            "validateLocation": "Please only enter one location",
+            "validateIcao": "The ICAO code ZZZZ does not have an exact location. You must specify an exact location with an IATA code or latitude and longitude by selecting \"I don't know the departure ICAO code\"."
         }
     },
     "egar-departure-no-icao": {
-        "summary": "I don't know the exact departure ICAO code"
+        "summary": "I don't know the departure ICAO code"
     },
     "egar-departure-location": {
         "options": {
@@ -94,7 +95,7 @@
     "egar-departure-iata": {
         "label": "Departure IATA code",
         "validation": {
-            "isValidCode": "Please enter a valid departure IATA code"            
+            "isValidCode": "Please enter a valid departure IATA code"
         }
     },
     "egar-arrival-date": {
@@ -134,11 +135,12 @@
         "label": "Arrival ICAO code",
         "validation": {
             "isValidCode": "Please enter a valid departure ICAO code",
-            "validateLocation": "Please only enter one location"            
+            "validateLocation": "Please only enter one location",
+            "validateIcao": "The ICAO code ZZZZ does not have an exact location. You must specify an exact location with an IATA code or latitude and longitude by selecting \"I don't know the arrival ICAO code\"."
         }
     },
     "egar-arrival-no-icao": {
-        "summary": "I don't know the exact arrival ICAO code"
+        "summary": "I don't know the arrival ICAO code"
     },
     "egar-arrival-location": {
         "options": {
@@ -167,7 +169,7 @@
     "egar-arrival-iata": {
         "label": "Arrival IATA code",
         "validation": {
-            "isValidCode": "Please enter a valid arrival IATA code"              
+            "isValidCode": "Please enter a valid arrival IATA code"
         }
     },
     "egar-goods-expander": {

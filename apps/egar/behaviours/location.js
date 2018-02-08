@@ -138,7 +138,7 @@ module.exports = LocationController => class extends LocationController {
             errors[`egar-${page}-time`] =
                 new this.ValidationError(`egar-${page}-time`, { type: 'validateTime', arguments: [] });
         }
-        if ((icao && iata) || (icao && point) || (iata && point)) {
+        if (((icao && iata) || (icao && point) || (iata && point)) && icao !== 'ZZZZ') {
             if (icao) {
                 errors[`egar-${page}-icao`] =
                     new this.ValidationError(`egar-${page}-icao`, { type: 'validateLocation', arguments: [] });
@@ -154,6 +154,11 @@ module.exports = LocationController => class extends LocationController {
                 errors[`egar-${page}-longitude`] =
                     new this.ValidationError(`egar-${page}-longitude`, { type: 'validateLocation', arguments: [] });
             }
+        }
+
+        if (icao === 'ZZZZ' && _.isEmpty(iata) && _.isEmpty(point)) {
+            errors[`egar-${page}-icao`] =
+            new this.ValidationError(`egar-${page}-icao`, { type: 'validateIcao', arguments: [] });
         }
         next(_.isEmpty(errors) ? null : errors);
     }

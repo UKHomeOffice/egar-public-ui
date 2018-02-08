@@ -37,6 +37,30 @@ _.defaultsDeep(config, processConfig, {
     'file-upload-secret-access-key': 'replace me',
     'file-upload-access-key-id': 'replace me',
     'file-upload-aws-region': 'eu-west-2',
+    // maximum file size in bytes 10MB
+    'file-upload-max-file-size': 10 * 1024 * 1024,
+    // file types
+    'file-upload-file-types': [
+        // pdf
+        'application/pdf',
+        // jpg
+        'image/jpeg',
+        'image/pjpeg',
+        // png
+        'image/png',
+        // doc
+        'application/msword',
+        // docx
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        // xls
+        'application/excel',
+        'application/vnd.ms-excel',
+        'application/x-excel',
+        // xlsx
+        'application/x-msexcel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ],
+    'meta-refresh-time': 20,
     validate: () => {
         let valid = true;
 

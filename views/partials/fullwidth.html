@@ -4,18 +4,20 @@
   {{/journeyHeader}}
 
   {{$validationSummary}}
+    <div class="column-full-width">
     {{> partials-validation-summary}}
+    </div>
   {{/validationSummary}}
 
   {{$propositionHeader}}
     {{> partials-navigation}}
   {{/propositionHeader}}
 
-  {{$content}} 
-    <div class="column-full-width"> 
+  {{$content}}
+    <div class="column-full-width">
       <h1>{{{title}}}</h1>
       {{<partials-form}}
-        {{$form}}      
+        {{$form}}
           {{$page-content}}{{/page-content}}
         {{/form}}
       {{/partials-form}}

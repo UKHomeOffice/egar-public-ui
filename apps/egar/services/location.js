@@ -161,24 +161,16 @@ class LocationService {
 
         body.datetime = datetime === '1900-01-01T00:00:59Z' ? null : datetime;
 
-        // All other parts of the body are optional
-        if (form[`egar-${location}-icao`]) {
-            if (Object.keys(rawForm).indexOf(`egar-${location}-icao-autocomplete`) >= 0) {
-                body.ICAO = rawForm[`egar-${location}-icao-autocomplete`];
-            } else {
-                body.ICAO = form[`egar-${location}-icao`];
-            }
-            body.ICAO = body.ICAO && body.ICAO.length > 0 ? body.ICAO : null;
+        const icao = (form[`egar-${location}-icao`] || rawForm[`egar-${location}-icao-autocomplete`]);
+        const iata = (form[`egar-${location}-iata`] || rawForm[`egar-${location}-iata-autocomplete`]);
 
+        // All other parts of the body are optional
+        if (icao && icao !== 'ZZZZ') {
+            body.ICAO = icao;
             body.point = null;
             body.IATA = null;
-        } else if (form[`egar-${location}-iata`]) {
-            if (Object.keys(rawForm).indexOf(`egar-${location}-iata-autocomplete`) >= 0) {
-                body.IATA = rawForm[`egar-${location}-iata-autocomplete`];
-            } else {
-                body.IATA = form[`egar-${location}-iata`];
-            }
-            body.IATA = body.IATA && body.IATA.length > 0 ? body.IATA : null;
+        } else if (iata) {
+            body.IATA = iata;
             body.point = null;
             body.ICAO = null;
         } else if (form[`egar-${location}-latitude`] || form[`egar-${location}-longitude`]) {

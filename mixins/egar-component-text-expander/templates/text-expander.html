@@ -1,9 +1,14 @@
 <details {{value}}>
-    <summary role="button">
-      <span class="summary">{{summary}}</span>
-    </summary>
-    <div class="panel-indent clear">
-      {{{details}}}
-      {{#renderChild}}{{/renderChild}}      
-    </div>
+  <summary role="button">
+    <span class="summary">{{summary}}</span>
+  </summary>
+  {{#details}}
+  <div class="panel-indent">
+    {{{details}}}
+  </div>
+  {{/details}} {{^details}}
+  <div class="panel-indent clear">
+    {{#renderChild}}{{/renderChild}}
+  </div>
+  {{/details}}
 </details>

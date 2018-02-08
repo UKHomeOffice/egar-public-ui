@@ -1,7 +1,9 @@
 'use strict';
 const _ = require('lodash');
-
+const config = require('../../../config')();
 const FileService = require('../services').FileService;
+
+const PENDING_FILE_STATES = ['UPLOADING', 'AWAITING_VIRUS_SCAN'];
 
 /**
  * The FormController behaviours for the file upload forms
@@ -39,13 +41,20 @@ module.exports = FileUploadController => class extends FileUploadController {
                     });
                 }
 
+                let hasPendingFiles = false;
                 /* eslint-disable camelcase*/
                 _.forEach(files.files, file => {
+                    if (PENDING_FILE_STATES.includes(file.file.file_status)) {
+                        hasPendingFiles = true;
+                    }
+
                     file.file.file_status = req.translate(`file-states.${file.file.file_status}`);
                 });
                 /* eslint-enable camelcase*/
 
                 data.files = files.files;
+                data.hasPendingFiles = hasPendingFiles;
+                data.metaRefreshTime = config['meta-refresh-time'];
                 next(null, data);
             }).catch(err => {
                 next(err, {});
@@ -94,6 +103,7 @@ module.exports = FileUploadController => class extends FileUploadController {
      * @param {Function} next The function to call with values when they're ready
      */
     process(req, res, next) {
+        req.sessionModel.unset('fileUploadError');
         if (req.body.delete) {
             let fileToDelete = req.body.delete;
             fileToDelete = fileToDelete.split(':');
@@ -119,33 +129,45 @@ module.exports = FileUploadController => class extends FileUploadController {
     }
 
     /**
+     * Validates the files
+     * @param {http.IncomingMessage} req The POST request
+     * @param {http.ServerResponse} res The response that will be sent to the browser
+     * @param {Function} next The function to call with values when they're ready
+     */
+    validate(req, res, next) {
+        if (req.session.fileError) {
+            req.sessionModel.set('fileUploadError', req.translate(`errors.${req.session.fileError}`));
+            delete req.session.fileError;
+        }
+        next();
+    }
+
+    /**
     * Saves the form values
     * @param {http.IncomingMessage} req The POST request
     * @param {http.ServerResponse} res The response that will be sent to the browser
     * @param {Function} next The function to call to continue the pipeline
     */
     saveValues(req, res, next) {
-        if (req.file && req.body['upload-file']) {
+        if (req.file && req.body['upload-file'] && !req.sessionModel.get('fileUploadError')) {
             req.sessionModel.set('supportingFiles', true);
             const values = {
                 uri: req.file.location || req.file.path,
                 garUuid: req.sessionModel.attributes.garUuid
             };
             this.service.postFileDetails(req, values)
-                .then((response) => {
-                    if (response.statusCode === 403) {
-                        const error = {
-                            reason: req.translate('errors.file-upload-error')
-                        };
-                        req.sessionModel.set('fileUploadError', error);
-                    } else {
-                        req.sessionModel.set('fileUploadError', '');
-                    }
+                .then(() => {
                     next();
                 })
                 .catch(err => {
+                    let error = req.translate('errors.file-upload-error');
+                    if (err.statusCode === 403 && err.error && err.error.message === 'Only allowed to upload 5 files') {
+                        error = req.translate('errors.max-files');
+                    }
+
                     this.log.error(err);
-                    next(err);
+                    req.sessionModel.set('fileUploadError', error);
+                    next();
                 });
         } else {
             next();
