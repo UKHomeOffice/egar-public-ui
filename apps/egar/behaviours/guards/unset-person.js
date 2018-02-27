@@ -17,7 +17,7 @@ module.exports = UnsetPersonGuard => class extends UnsetPersonGuard {
      * When the user navigates to a page that does not need a personId set,
      * this guard unsets it from the session.
      *
-     * @param {http.IncomingMessage} req The POST request
+     * @param {http.IncomingMessage} req The incoming request
      * @param {http.ServerResponse} res The response that will be sent to the browser
      * @param {Function} next The function to call to continue the pipeline
      */

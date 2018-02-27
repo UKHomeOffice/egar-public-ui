@@ -1,0 +1,20 @@
+{{<partials-columns}}
+
+  {{$page-content}}
+    {{#values}}
+        <h1>Add {{name}} as a captain, crew or passenger on this flight</h1>
+    {{/values}}
+    {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    {{#fields}}
+        {{#renderField}}{{/renderField}}
+    {{/fields}}
+    {{#afterFields}}
+        {{afterFields}}
+    {{/afterFields}}
+    {{<partials-submit-buttons}}
+    {{/partials-submit-buttons}} 
+  {{/page-content}}
+
+{{/partials-columns}}

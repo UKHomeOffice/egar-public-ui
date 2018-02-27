@@ -1,6 +1,9 @@
 'use strict';
 const _ = require('lodash');
 const PersonService = require('../services').PersonService;
+const config = require('../../../config')();
+const paging = require('./utils').paging;
+
 
 /**
  * The FormController behaviours for the people table
@@ -15,6 +18,7 @@ module.exports = PeopleController => class extends PeopleController {
         super(options);
         this.$className = 'PeopleController';
         this.service = new PersonService();
+        this.PAGE_LENGTH = config['people-page-length'];
     }
 
     /**
@@ -41,10 +45,11 @@ module.exports = PeopleController => class extends PeopleController {
         if (req.method === 'POST' && !req.body.continue) {
 
             let personIdToModify = _.find(Object.keys(req.body),
-                k => ((k.indexOf('delete:') === 0)
-                     || (k.indexOf('edit:') === 0)
-                     || (k.indexOf('add-new:') === 0))
-                );
+                k => ((k.indexOf('delete:') === 0) ||
+                    (k.indexOf('edit:') === 0) ||
+                    (k.indexOf('add-new:') === 0)) ||
+                (k.indexOf('use-existing:') === 0)
+            );
 
             personIdToModify = personIdToModify.split(':');
             const task = personIdToModify[0];
@@ -67,11 +72,11 @@ module.exports = PeopleController => class extends PeopleController {
 
                 case 'delete':
                     this.service.deletePerson(req, garUuid, personID)
-                    .then(() => {
-                        // Redirect to the peoples form
-                        req.form.options.next = req.form.options.route;
-                        super.process(req, res, next);
-                    });
+                        .then(() => {
+                            // Redirect to the peoples form
+                            req.form.options.next = req.form.options.route;
+                            super.process(req, res, next);
+                        });
                     break;
 
                 case 'edit':
@@ -97,6 +102,11 @@ module.exports = PeopleController => class extends PeopleController {
                     super.process(req, res, next);
                     break;
 
+                case 'use-existing':
+                    req.form.options.next = '/person-existing';
+                    super.process(req, res, next);
+                    break;
+
                 default:
                     super.process(req, res, next);
                     break;
@@ -118,13 +128,34 @@ module.exports = PeopleController => class extends PeopleController {
      */
     getValues(req, res, next) {
         const garUuid = req.sessionModel.get('garUuid');
-        this.service.getPeopleDetails(req, garUuid)
+
+        var currentPage = paging.getCurrentPage(req);
+        var numPeople = 0;
+
+        this.service.getPeopleForGAR(req, garUuid)
             .then(people => {
-                next(null, people);
-            }).catch(err => {
+                people.peopleUUIDs = _.without(_.concat(people.captain, people.crew, people.passengers), undefined);
+                numPeople = people.peopleUUIDs.length;
+                people.peopleUUIDs = paging.getUUIDSForCurrentPage(people.peopleUUIDs, currentPage, this.PAGE_LENGTH);
+                return Promise.all(_.map(people.peopleUUIDs || [], personUUID => {
+                    return personUUID ? this.service.getPerson(req, garUuid, personUUID) : null;
+                }));
+            })
+            .then(peopleDetails => {
+                const pagingData = paging.getPagingData(numPeople, currentPage, this.PAGE_LENGTH, req);
+
+                return {
+                    people: peopleDetails,
+                    paging: pagingData
+                };
+            })
+            .then(peopleDetails => {
+                next(null, peopleDetails);
+            })
+            .catch(err => {
                 next(err, {});
             });
-        }
+    }
 
     /**
      * Sets locals before render
@@ -135,16 +166,16 @@ module.exports = PeopleController => class extends PeopleController {
         const locals = super.locals(req, res);
 
         locals.buttons = [{
-            id: 'add-new::',
-            name: 'add-new:',
-            value: req.translate('buttons.add-new')
-        }];
-        // ,
-        // {
-        //     id: 'use-existing::',
-        //     name: 'use-existing:',
-        //     value: req.translate('buttons.use-existing')
-        // }];
+                id: 'add-new::',
+                name: 'add-new:',
+                value: req.translate('buttons.add-new')
+            },
+            {
+                id: 'use-existing::',
+                name: 'use-existing:',
+                value: req.translate('buttons.use-existing')
+            }
+        ];
 
         return locals;
     }

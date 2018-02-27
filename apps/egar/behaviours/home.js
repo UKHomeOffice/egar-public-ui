@@ -1,5 +1,7 @@
 'use strict';
+const AircraftService = require('../services').AircraftService;
 const GarService = require('../services').GarService;
+
 
 /**
  * The FormController behaviours for the Home page
@@ -14,6 +16,7 @@ module.exports = HomeController => class extends HomeController {
         super(options);
         this.$className = 'HomeController';
         this.service = new GarService();
+        this.aircraftService = new AircraftService();
     }
 
     configure(req, res, callBack) {
@@ -51,6 +54,7 @@ module.exports = HomeController => class extends HomeController {
                 this.service.postCreateGar(req)
                     .then(resp => {
                         const garUuid = resp.gar_uuid;
+                        this.aircraftService.postAircraftDetails(req, garUuid, {});
                         req.sessionModel.set('garUuid', garUuid);
                         req.form.options.next = '/aircraft';
                         next();

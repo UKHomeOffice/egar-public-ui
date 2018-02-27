@@ -1,5 +1,6 @@
 'use strict';
 
+const FileGuard = require('./behaviours').Guards.FileGuard;
 const GarGuard = require('./behaviours').Guards.GarGuard;
 const PersonGuard = require('./behaviours').Guards.PersonGuard;
 const UnsetPersonGuard = require('./behaviours').Guards.UnsetPersonGuard;
@@ -19,7 +20,11 @@ const EgarController = require('./behaviours').EgarController;
 const SubmitController = require('./behaviours').SubmitController;
 const CompleteController = require('./behaviours').CompleteController;
 const FileUploadController = require('./behaviours').FileUploadController;
+const FileUploadOkController = require('./behaviours').FileUploadOkController;
 const SupportingFilesController = require('./behaviours').SupportingFilesController;
+const ExistingPeopleController = require('./behaviours').ExistingPeopleController;
+const ExistingPeopleTypeController = require('./behaviours').ExistingPeopleTypeController;
+
 const BehaviourAggregator = require('./behaviours').Aggregator;
 
 module.exports = {
@@ -48,7 +53,7 @@ module.exports = {
         },
         '/aircraft': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, AircraftController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, UnsetFilesGuard, AircraftController],
             backLink: 'home',
             fields: [
                 'egar-aircraft-registration',
@@ -71,7 +76,7 @@ module.exports = {
         },
         '/departure': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, LocationController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, UnsetFilesGuard, LocationController],
             backLink: 'aircraft',
             fields: [
                 'egar-departure-date',
@@ -98,7 +103,7 @@ module.exports = {
         },
         '/arrival': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, LocationController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, UnsetFilesGuard, LocationController],
             backLink: 'departure',
             fields: [
                 'egar-arrival-date',
@@ -125,7 +130,7 @@ module.exports = {
         },
         '/goods': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, AttributesController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, UnsetFilesGuard, AttributesController],
             backLink: 'arrival',
             fields: [
                 'egar-goods-declaration',
@@ -147,16 +152,28 @@ module.exports = {
         '/people': {
             next: '/supporting-files',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, PeopleController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, UnsetFilesGuard, PeopleController],
             backLink: 'goods'
         },
         '/person-existing': {
-            next: '/people'
+            next: '/people',
+            behaviours: BehaviourAggregator,
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, ExistingPeopleController],
+            backLink: 'people',
+        },
+        '/person-existing-type': {
+            next: '/people',
+            backLink: 'person-existing',
+            behaviours: BehaviourAggregator,
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, ExistingPeopleTypeController],
+            fields: [
+                'egar-person-existing-type'
+            ]
         },
         '/person-type': {
             next: '/person-general',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetFilesGuard, PersonController],
             backLink: 'people',
             fields: [
                 'egar-person-type'
@@ -187,7 +204,7 @@ module.exports = {
         '/captain-general': {
             next: '/captain-birth',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'person-type',
             fields: [
                 'egar-person-given-name',
@@ -199,7 +216,7 @@ module.exports = {
         '/captain-birth': {
             next: '/captain-travel',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'captain-general',
             fields: [
                 'egar-person-dob',
@@ -210,7 +227,7 @@ module.exports = {
         '/captain-travel': {
             next: '/captain-responsible',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'captain-birth',
             fields: [
                 'egar-person-travel-document-type',
@@ -221,7 +238,7 @@ module.exports = {
         },
         '/captain-responsible': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, AttributesController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, AttributesController],
             backLink: 'captain-travel',
             fields: [
                 'egar-person-responsible',
@@ -245,7 +262,7 @@ module.exports = {
             next: '/crew-birth',
             backLink: 'person-type',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             fields: [
                 'egar-person-given-name',
                 'egar-person-family-name',
@@ -256,7 +273,7 @@ module.exports = {
         '/crew-birth': {
             next: '/crew-travel',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'crew-general',
             fields: [
                 'egar-person-dob',
@@ -266,7 +283,7 @@ module.exports = {
         },
         '/crew-travel': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'crew-birth',
             fields: [
                 'egar-person-travel-document-type',
@@ -290,7 +307,7 @@ module.exports = {
         '/passenger-general': {
             next: '/passenger-birth',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'person-type',
             fields: [
                 'egar-person-given-name',
@@ -302,7 +319,7 @@ module.exports = {
         '/passenger-birth': {
             next: '/passenger-travel',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'passenger-general',
             fields: [
                 'egar-person-dob',
@@ -312,7 +329,7 @@ module.exports = {
         },
         '/passenger-travel': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, PersonController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, PersonGuard, UnsetFilesGuard, PersonController],
             backLink: 'passenger-birth',
             fields: [
                 'egar-person-travel-document-type',
@@ -335,7 +352,7 @@ module.exports = {
         },
         '/supporting-files': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, SupportingFilesController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, UnsetFilesGuard, SupportingFilesController],
             next: '/summary',
             backLink: 'people',
             fields: [
@@ -357,16 +374,23 @@ module.exports = {
             backLink: 'supporting-files',
             fields: ['egar-supporting-files-upload']
         },
+        '/upload-file-ok': {
+            behaviours: BehaviourAggregator,
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, FileGuard, FileUploadOkController],
+            next: '/upload-files',
+            backLink: 'upload-files',
+            fields: ['egar-file-ok']
+        },
         '/summary': {
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetPersonGuard, SummaryController],
+            subBehaviours: [GarGuard, UnsetPersonGuard, UnsetFilesGuard, SummaryController],
             backLinks: ['manage-gars'],
             next: '/submit'
         },
         '/submit': {
             next: '/complete',
             behaviours: BehaviourAggregator,
-            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, SubmitController],
+            subBehaviours: [GarGuard, UnsetErrorsGuard, UnsetPersonGuard, UnsetFilesGuard, SubmitController],
             backLink: 'summary'
         },
         '/complete': {

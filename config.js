@@ -20,12 +20,22 @@ _.defaultsDeep(config, processConfig, {
     // Poll for submission status changing a maximum of 10 times (10 x submission-poll-timeout = 50s)
     // After the 10 time, with no resolution, the user will be informed that the submission is still pending.
     'max-submission-polls': 10,
-    // Cancellation check of the limit Before or After the given time
-    'cancel-submission-before-after': 'after',
-    // Cancellation check of the limit on the Departure or Arrival time
-    'cancel-submission-departure-arrival': 'departure',
-    // The Time limit for cancelling a submitted GAR
-    'cancel-submission-time': 1,
+    'gar-page-length': 10,
+    'people-page-length': 10,
+    // The cut-off point for cancelling a submitted GAR is:
+    // before/after...
+    'cancel-submission-before-after': 'before',
+    // the departure/arrival...
+    'cancel-submission-departure-arrival': 'arrival',
+    // + a time limit (in hours) [default=Any time before arrival in the UK]
+    'cancel-submission-time-limit-hours': 0,
+    // The cut-off point for submitting GAR is:
+    // before/after...
+    'submit-before-after': 'before',
+    // the departure/arrival...
+    'submit-departure-arrival': 'departure',
+    // + a time limit (in hours) [default=2hrs before 'wheels up' (departure)]
+    'submit-time-limit-hours': 2,
     // The travel document expiry date max value to add to the current date
     // currently set to yesterday
     'travel-doc-expiry-date-value': -1,

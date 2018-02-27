@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    FileGuard: require('./file'),
     GarGuard: require('./gar'),
     PersonGuard: require('./person'),
     UnsetPersonGuard: require('./unset-person'),

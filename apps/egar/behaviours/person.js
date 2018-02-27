@@ -47,7 +47,7 @@ module.exports = PersonController => class extends PersonController {
         let captain;
 
         if (req.url.includes('person-type')) {
-            this.service.getPeople(req, garUuid)
+            this.service.getPeopleForGAR(req, garUuid)
                 .then(people => {
                     captain = people.captain;
                     if (!personId) {
@@ -66,12 +66,13 @@ module.exports = PersonController => class extends PersonController {
         if (personId) {
             this.service.getPerson(req, garUuid, personId)
                 .then(person => {
-                    req.sessionModel.set('person', person);
-                    if (captain && person['egar-person-type'] !== 'captain') {
+                    let formValues = this.addPersonDetailsToForm(req, person);
+                    req.sessionModel.set('person', formValues);
+                    if (captain && person.type !== 'captain') {
                         req.form.options.fields['egar-person-type'].options =
                             req.form.options.fields['egar-person-type'].options.splice(1);
                     }
-                    next(null, person);
+                    next(null, formValues);
                 }).catch(err => {
                     next(err, {});
                 });
@@ -107,5 +108,31 @@ module.exports = PersonController => class extends PersonController {
                     next(err);
                 });
         }
+    }
+
+    /**
+     * Maps a person to the form field values, filtering out any falsy properties
+     * @param {http.IncomingMessage} req The incoming request
+     * @param {Object} person An Object containing person details
+     * @returns {Object} A map of form fields vs values
+     */
+    addPersonDetailsToForm(req, person) {
+        let formValues = {};
+        formValues['egar-person-type'] = person.type;
+        formValues['egar-person-given-name'] = person.details.given_name;
+        formValues['egar-person-family-name'] = person.details.family_name;
+        formValues['egar-person-gender'] = _.lowerCase(person.details.gender);
+        formValues['egar-person-uk-address'] = person.details.address;
+        formValues['egar-person-dob'] = person.details.dob;
+        formValues['egar-person-birth-place'] = person.details.place;
+        formValues['egar-person-nationality-country'] = person.details.nationality;
+        formValues['egar-person-travel-document-type'] = person.details.document_type;
+        formValues['egar-person-travel-document-number'] = person.details.document_no;
+        formValues['egar-person-travel-document-expiry'] = person.details.document_expiryDate;
+        formValues['egar-person-travel-document-country'] = person.details.document_issuingCountry;
+
+        formValues = _.pickBy(formValues, value => !!value);
+
+        return formValues;
     }
 };

@@ -1,9 +1,11 @@
 'use strict';
-
 const _ = require('lodash');
+const querystring = require('querystring');
+
 const config = require('../../../config')();
-const moment = require('moment');
 const egarRequest = require('./request-promise-egar');
+
+
 /**
  * The Service for dealing with GARs
  */
@@ -24,6 +26,13 @@ class GarService {
 
         this.GAR_ENDPOINT_GENERATOR = (garUuid) => {
             return `${baseUrl}/WF/GARs/${garUuid}/`;
+        };
+
+        this.GAR_SEARCH_ENDPOINT_GENERATOR = (searchTerm) => {
+            if (searchTerm) {
+                return `${baseUrl}/WF/search/GARs/?search_criteria=${querystring.escape(searchTerm)}`;
+            }
+            return `${baseUrl}/WF/search/GARs/`;
         };
 
         this.GAR_STATES = {
@@ -53,6 +62,16 @@ class GarService {
         return `${this.GARS_ENDPOINT_GENERATOR()}`;
     }
 
+
+    /**
+     * Gets the API endpoint URL for:
+     * GET - Retrieves people assoicated with the logged in users account
+     * @returns {string} The API endpoint
+     */
+    getGarsSearchUrl(searchTerm) {
+        return `${this.GAR_SEARCH_ENDPOINT_GENERATOR(searchTerm)}`;
+    }
+
     /**
      * Gets the GAR.
      * @param {http.IncomingMessage} req The incoming request
@@ -79,52 +98,8 @@ class GarService {
 
         return egarRequest(options, req)
             .then(response => {
-
-                return Promise.all(_.map(response.gar_uuids || [], garUuid => {
-                    let summaryOptions = {
-                        uri: this.getSummaryGarUrl(garUuid),
-                        json: true
-                    };
-                    return garUuid ? egarRequest(summaryOptions, req) : null;
-                }));
-            })
-            .then(garResponses => {
-
-                _.forEach(garResponses, gar => {
-                    if (gar.location.length > 0) {
-                        gar.departure = gar.location[0];
-                        if (!_.isNil(gar.departure) && !_.isNil(gar.departure.datetime)) {
-                            gar.departure.date = moment(gar.departure.datetime).format('DD/MM/YYYY');
-                            gar.departure.time = moment(gar.departure.datetime).format('HH:mm');
-                        }
-                    }
-
-                    const status = this.getGarStatus(gar, req);
-                    gar.state = status.displayValue;
-                    gar.canEdit = !_.includes([this.GAR_STATES.SUBMITTED, this.GAR_STATES.CANCELLED], status.status);
-
-                    if (status.status === this.GAR_STATES.SUBMITTED) {
-                        // the user can cancel if the gar is submitted and if the current time
-                        // is before departure, after departure or before arrival by a set limit
-                        const timeLimit = config['cancel-submission-time'];
-
-                        const departure = gar.location[0];
-                        const arrival = gar.location[1];
-
-                        const time = config['cancel-submission-departure-arrival'] === 'departure' ?
-                        departure.datetime : arrival.datetime;
-                        const cancellationTime = config['cancel-submission-before-after'] === 'before' ?
-                        moment(time).subtract(timeLimit, 'h') : moment(time).add(timeLimit, 'h');
-
-                        gar.canCancel = moment().isSameOrBefore(cancellationTime);
-                    }
-                });
-
-                return {
-                    gars: garResponses
-                };
+                return response;
             });
-
     }
 
     /**
@@ -196,6 +171,30 @@ class GarService {
             status: status,
             displayValue: req.translate(`gar-states.${status}`)
         };
+    }
+
+
+     /**
+     * Returns the list of gar uuids matching search term.
+     * If no search term provided, returns all
+     *
+     * @param {http.IncomingMessage} req The incoming request
+     * @param {string} searchTerm The data to search for
+     * @returns {gar_uuids} list of uuids
+     *
+     * @memberOf GarService
+     */
+    searchGars(req, searchTerm) {
+        let options = {
+            method: 'GET',
+            uri: this.getGarsSearchUrl(searchTerm),
+            json: true
+        };
+
+        return egarRequest(options, req)
+            .then(response => {
+                return response.gar_uuids;
+            });
     }
 
 }

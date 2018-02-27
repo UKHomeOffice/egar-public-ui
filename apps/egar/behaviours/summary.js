@@ -450,10 +450,12 @@ module.exports = SummaryController => class extends SummaryController {
 
                 summary.departure = _.merge(summary.departure, {
                     dateError: _.find(errors, e => e.field === 'departure-future-date'
-                        || e.field === 'departure-arrival-date-error')
+                        || e.field === 'departure-arrival-date-error'
+                        || e.field === 'departure-submit-limit-passed')
                         ? summary.departure.date : this.findError(errors, 'departure-date'),
                     timeError: _.find(errors, e => e.field === 'departure-future-date'
-                        || e.field === 'departure-arrival-date-error')
+                        || e.field === 'departure-arrival-date-error'
+                        || e.field === 'departure-submit-limit-passed')
                         ? summary.departure.time : this.findError(errors, 'departure-time'),
                     locationError: _.find(errors, e =>
                         e.field === 'departure-arrival-location-error')
@@ -461,11 +463,13 @@ module.exports = SummaryController => class extends SummaryController {
                 });
 
                 summary.arrival = _.merge(summary.arrival, {
-                    dateError: _.find(errors, e =>
-                        e.field === 'arrival-future-date' || e.field === 'departure-arrival-date-error')
+                    dateError: _.find(errors, e => e.field === 'arrival-future-date'
+                        || e.field === 'departure-arrival-date-error'
+                        || e.field === 'arrival-submit-limit-passed')
                         ? summary.arrival.date : this.findError(errors, 'arrival-date'),
                     timeError: _.find(errors, e => e.field === 'arrival-future-date'
-                        || e.field === 'departure-arrival-date-error')
+                        || e.field === 'departure-arrival-date-error'
+                        || e.field === 'arrival-submit-limit-passed')
                         ? summary.arrival.time : this.findError(errors, 'arrival-time'),
                     locationError: _.find(errors, e =>
                         e.field === 'departure-arrival-location-error')
@@ -488,7 +492,7 @@ module.exports = SummaryController => class extends SummaryController {
                     { documentNoError: this.findError(errors, 'captain-document_no') },
                     { documentExpiryError: this.findError(errors, 'captain-document_expiryDate') },
                     { documentIssueError: this.findError(errors, 'captain-document_issuingCountry') },
-                    { responsiblePersonError: this.findError(errors, 'captain-responsible-person-type') },
+                    { responsiblePersonError: this.findError(errors, 'captain-responsible-person') },
                     { responsiblePersonNameError: this.findError(errors, 'captain-responsible-person-name') },
                     { responsiblePersonNumberError: this.findError(errors, 'captain-responsible-person-number') }
                 );
@@ -526,10 +530,10 @@ module.exports = SummaryController => class extends SummaryController {
 
                 summary.files = _.forEach(summary.files, file => {
                     _.merge(file, {
-                        fileNameError: this.findError(errors, 'files', file.fileId)
-                            ? file.filename : null
-                    },
-                        { fileStatusError: this.findError(errors, 'files', file.fileId) ? file.filestatus : null });
+                        fileNameError: this.findError(errors, 'files', file.fileId) ? file.filename : null
+                    }, {
+                        fileStatusError: this.findError(errors, 'files', file.fileId) ? file.filestatus : null
+                    });
                 });
 
                 summary.aircraftExists = !!summary.aircraft;
@@ -572,9 +576,8 @@ module.exports = SummaryController => class extends SummaryController {
      *
      * @param {http.IncomingMessage} req The GET request
      * @param {http.ServerResponse} res The response that will be sent to the browser
-     * @param {Function} next The function to call with values when they're ready
      */
-    cancelGar(req, res, next) {
+    cancelGar(req, res) {
         const garUuid = req.sessionModel.get('garUuid');
         const garStates = this.service.GAR_STATES;
 
@@ -609,7 +612,6 @@ module.exports = SummaryController => class extends SummaryController {
             }).then(response => {
                 if (response.status === garStates.CANCELLED) {
                     res.redirect('/egar/manage-gars');
-                    next();
                 } else {
                     const error = {
                         reason: (response && response.statusCode === 403 ?

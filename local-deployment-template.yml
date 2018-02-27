@@ -1,11 +1,11 @@
 workflow-api:
   container_name: workflow-api
-  image: pipe.egarteam.co.uk/egar-workflow-api:4.2.3
+  image: pipe.egarteam.co.uk/egar-workflow-api:5.0.3-SNAPSHOT
   expose:
-  # Expose 9090 for the workflow-api-proxy to see
-  - "9090"
+  # Expose 8080 for the workflow-api-proxy to see
+  - "8080"
   command:
-  - --spring.profiles.active=mock-gar,mock-location,mock-person,mock-aircraft,mock-submission,mock-file
+  - --spring.profiles.active=mock-gar,mock-location,mock-person,mock-aircraft,mock-submission,mock-file,mock-gar-search,mock-person-search
   - --workflow.egar.submission.api.url=http://172.31.21.16:8085/api/v1/Submission/
 
 workflow-api-proxy:
@@ -24,7 +24,7 @@ workflow-api-proxy:
   - --client-secret=${KEYCLOAK_CLIENT_SECRET}
   - --listen=0.0.0.0:8010
   - --encryption-key=${KEYCLOAK_ENC_KEY}
-  - --upstream-url=http://workflow-api:9090
+  - --upstream-url=http://workflow-api:8080
   - --resources=uri=/api*|roles=uma_authorization
   - --secure-cookie=false
   - --enable-logging=true

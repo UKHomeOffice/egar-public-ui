@@ -4,30 +4,30 @@
    {{beforeFields}}
 {{/beforeFields}}
 
+{{#values}}
 <h3>You can edit, view or cancel draft and submitted General Aviation Reports (GARs) depending on the status of the flight.</h3>
-<!--
-<h3>Search on date of departure to find your GAR.</h3>
--->
+<h3>Search to find your GAR</h3>
+<div class="search-wrapper">
+    <input type="text" id="search" name="searchTerm" title="Search" value="{{searchTerm}}" class="search-element search-input js-class-toggle">
+    <div class="search-element search-submit-wrapper">
+        <button type="submit" name="search" value="search" class="search-submit">Search</button>
+    </div>
+</div>
+{{/values}}
 
 {{#fields}}
-<!--
-s{{#renderField}}{{/renderField}}
--->
+
 {{/fields}}
 {{#afterFields}}
 {{afterFields}}
 {{/afterFields}}
 
-<!--
-{{#input-submit}}search{{/input-submit}}
--->
-
 {{#values}}
 
     <table class="egar-table">
+        <thead>
         <caption>List of GARs</caption>
         <tr>
-            <!--<th scope="col" class="hide-header">Selected</th>-->
             <th scope="col">Status</th>
             <th scope="col">GAR reference</th>
             <th scope="col">Submission reference</th>
@@ -37,11 +37,10 @@ s{{#renderField}}{{/renderField}}
             <th scope="col">Departure ICAO</th>
             <th scope="col">Actions</th>
         </tr>
+    </thead>
+    <tbody>
         {{#gars}}
         <tr>
-             <!-- <td>
-                <input type="checkbox"  />
-            </td>-->
             <td>{{state}}</td>
             <td>{{gar_uuid}}</td>
             <td>{{submission.external_ref}}</td>
@@ -60,6 +59,22 @@ s{{#renderField}}{{/renderField}}
             </td>
         </tr>
         {{/gars}}
+    </tbody>
+    <tfoot>
+        {{#paging}}
+        <tr>
+            <td colspan="8" class="paging">
+                    <p class="pagingText">{{pagingText}}</p>
+                   <a href="{{url}}?{{queryString}}p={{previousPage}}">< Previous</a>
+                {{#pages}}
+                    <a href="{{url}}?{{queryString}}p={{pageNum}}">{{displayPageNum}}</a>
+                {{/pages}}
+                   <a href="{{url}}?{{queryString}}p={{nextPage}}">Next ></a>
+
+            </td>
+        </tr>
+        {{/paging}}
+    </tfoot>
       </table>
 
 

@@ -51,7 +51,13 @@
     "arrival-future-date": "You must enter a date/time of arrival that is in the future",
     "departure-arrival-date-error": "Your date/time of arrival must be after your date/time of departure",
     "departure-arrival-location-error": "Your arrival location must be different to your departure location",
-
+    "gar-outside-submit-window": {
+        "message-template": "You must give enough notice for your GAR submission. The cut-off is %d hours %s to %s",
+        "before": "prior",
+        "after": "after",
+        "departure": "departure",
+        "arrival": "arrival"
+    },
     "file-upload-error": "Could not upload your file as it did not meet requirements",
     "upload-error": "Supporting documents",
     "file-virus": "One or more of your documents has failed a virus scan. Check your uploaded files and try again",
@@ -60,5 +66,6 @@
 
     "max-files": "You have reached a maximum number of supporting files that can be uploaded to accompany your GAR",
     "max-file-size": "The file that you have just tried to upload has exceeded the maximum size of 10MB",
-    "file-format": "The file that you have tried to upload is in a file format that is currently not supported"
+    "file-format": "The file that you have tried to upload is in a file format that is currently not supported",
+    "duplicate-file-warning": "There seems to be a file already attached to your GAR with the same name"
 }

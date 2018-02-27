@@ -15,5 +15,8 @@ module.exports = {
     SubmitController: require('./submit'),
     CompleteController: require('./complete'),
     FileUploadController: require('./upload-files'),
-    SupportingFilesController: require('./supporting-files')
+    FileUploadOkController: require('./upload-file-ok'),
+    SupportingFilesController: require('./supporting-files'),
+    ExistingPeopleController: require('./person-existing'),
+    ExistingPeopleTypeController: require('./person-existing-type')
 };

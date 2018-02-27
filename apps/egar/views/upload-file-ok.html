@@ -1,0 +1,25 @@
+{{<partials-columns}}
+
+  {{$page-content}}
+     {{#beforeFields}}
+        {{beforeFields}}
+    {{/beforeFields}}
+    {{#values}}
+        <img src="/public/images/file.png" alt="File">
+        <p><strong>{{filename}}</strong></p>
+
+        {{#possibleDuplicate}}
+        <p><strong>{{duplicateWarning}}</strong></p>
+        {{/possibleDuplicate}}
+    {{/values}}
+    {{#fields}}
+        {{#renderField}}{{/renderField}}
+    {{/fields}}
+    {{#afterFields}}
+        {{afterFields}}
+    {{/afterFields}}
+    {{<partials-submit-buttons}}
+    {{/partials-submit-buttons}}
+  {{/page-content}}
+
+{{/partials-columns}}

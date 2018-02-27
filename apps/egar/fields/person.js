@@ -22,6 +22,13 @@ module.exports = {
         options: ['captain', 'crew', 'passenger'],
         validate: 'required'
     },
+    'egar-person-existing-type': {
+        mixin: 'radio-group',
+        legend: {
+            className: 'visuallyhidden'
+        },
+        options: ['captain', 'crew', 'passenger']
+    },
     'egar-person-given-name': {
         mixin: 'input-text',
         validate: [{type: 'maxlength', arguments: 35 }]

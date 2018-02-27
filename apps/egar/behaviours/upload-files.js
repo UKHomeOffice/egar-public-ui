@@ -58,8 +58,7 @@ module.exports = FileUploadController => class extends FileUploadController {
                 next(null, data);
             }).catch(err => {
                 next(err, {});
-            }
-            );
+            });
     }
 
     /**
@@ -121,7 +120,8 @@ module.exports = FileUploadController => class extends FileUploadController {
                 );
         } else {
             if (req.body['upload-file']) {
-                req.form.options.next = req.form.options.route;
+                req.sessionModel.set('uploadFile', req.file);
+                req.form.options.next = '/upload-file-ok';
             }
 
             next();
@@ -140,37 +140,5 @@ module.exports = FileUploadController => class extends FileUploadController {
             delete req.session.fileError;
         }
         next();
-    }
-
-    /**
-    * Saves the form values
-    * @param {http.IncomingMessage} req The POST request
-    * @param {http.ServerResponse} res The response that will be sent to the browser
-    * @param {Function} next The function to call to continue the pipeline
-    */
-    saveValues(req, res, next) {
-        if (req.file && req.body['upload-file'] && !req.sessionModel.get('fileUploadError')) {
-            req.sessionModel.set('supportingFiles', true);
-            const values = {
-                uri: req.file.location || req.file.path,
-                garUuid: req.sessionModel.attributes.garUuid
-            };
-            this.service.postFileDetails(req, values)
-                .then(() => {
-                    next();
-                })
-                .catch(err => {
-                    let error = req.translate('errors.file-upload-error');
-                    if (err.statusCode === 403 && err.error && err.error.message === 'Only allowed to upload 5 files') {
-                        error = req.translate('errors.max-files');
-                    }
-
-                    this.log.error(err);
-                    req.sessionModel.set('fileUploadError', error);
-                    next();
-                });
-        } else {
-            next();
-        }
     }
 };

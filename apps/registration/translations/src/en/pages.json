@@ -1,5 +1,9 @@
-{ 
+{
   "welcome": {
     "header": "Submit a General Aviation Report (GAR)"
+  },
+  "sign-out": {
+    "header": "You have signed out",
+    "link": "Sign in again"
   }
 }

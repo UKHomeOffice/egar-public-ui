@@ -202,6 +202,19 @@
             "required": "Please select a person"
         }
     },
+    "egar-person-existing-type": {
+        "options": {
+            "captain": {
+                "label": "Captain"
+            },
+            "crew": {
+                "label": "Crew"
+            },
+            "passenger": {
+                "label": "Passenger"
+            }
+        }
+    },
     "egar-person-given-name": {
         "label": "Given name(s)"
     },
@@ -316,6 +329,16 @@
             },
             "false": {
                 "label": "No"
+            }
+        }
+    },
+    "egar-file-ok": {
+        "options": {
+            "true": {
+                "label": "Yes, upload this file"
+            },
+            "false": {
+                "label": "No, I want to change the file"
             }
         }
     }

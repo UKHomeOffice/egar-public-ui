@@ -26,13 +26,9 @@ module.exports = GarGuard => class extends GarGuard {
      * @param {Function} next The function to call to continue the pipeline
      */
     configure(req, res, next) {
-        if (!req.sessionModel.get('garUuid')) {
-            const referrer = req.get('Referrer');
-            if (referrer && referrer.indexOf('/egar/')) {
-                res.redirect('back');
-            } else {
-                res.redirect('/egar/manage-gars');
-            }
+        if (!req.sessionModel.get('garUuid') && !res.headersSent) {
+            res.redirect('/egar/manage-gars');
+
         } else {
             next();
         }

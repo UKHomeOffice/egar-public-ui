@@ -1,34 +1,69 @@
-{{<partials-fullwidth}}
-  {{$page-content}}
-     {{#beforeFields}}
-        {{beforeFields}}
-    {{/beforeFields}}
-    {{#fields}}
-        {{#renderField}}{{/renderField}}
-    {{/fields}}
-    {{#afterFields}}
-        {{afterFields}}
-    {{/afterFields}}
-    <p>You can reuse captain, crew and passenger details from a previously submitted GAR within the last twelve months. Records that were entered more then twelve months ago will not be available and you will be required to re-enter these details via the add new captain, crew and passenger details</p>
-    <p>You must ensure that all data submitted against a person is up to date prior to your GAR submission</p>
-    <table>
+{{<partials-fullwidth}} {{$page-content}} {{#beforeFields}} {{beforeFields}} {{/beforeFields}} {{#fields}} {{#renderField}}{{/renderField}}
+    {{/fields}} {{#afterFields}} {{afterFields}} {{/afterFields}} <p>You can reuse captain, crew and passenger details from GARs submitted within the last twelve months only.</p>
+    <p>You must ensure that all information is up to date before you submit your GAR.</p>
+
+    <label for="search" class="search-label">
+            Search for a person
+    </label>
+    {{#values}}
+    <div class="search-wrapper">
+        <input type="text" id="search" name="searchTerm" title="Search" value="{{searchTerm}}" class="search-element search-input js-class-toggle">
+        <div class="search-element search-submit-wrapper">
+            <button type="submit" name="search" value="search" class="search-submit">Search</button>
+        </div>
+    </div>
+
+    <table class="egar-table">
         <thead>
+            <caption>List of people</caption>
             <tr>
-                <th><a href="#">Type</a></th>
-                <th><a href="#">Given name(s)</a></th>
-                <th><a href="#">Family name(s)</a></th>
-                <th><a href="#">Date of birth</a></th>
-                <th><a href="#">Travel document number</a></th>
-                <th><a href="#">Expiry date</a></th>
+                <th scope="col">Given name(s)</th>
+                <th scope="col">Family name(s)</th>
+                <th scope="col">Date of birth</th>
+                <th scope="col">Travel document number</th>
+                <th scope="col">Expiry date</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
+            {{#people}}
             <tr>
-                <td colspan="6">There are no records available</td>
+                {{#details}}
+                <td>{{given_name}}</td>
+                <td>{{family_name}}</td>
+                <td>{{dobPrettyPrint}}</td>
+                <td>{{document_no}}</td>
+                <td>{{documentExpiryDatePrettyPrint}}</td>
+                {{/details}}
+                <td class="egar-table-actions">
+                    <button type="submit" name="add:{{person_uuid}}:{{full_name}}" value="Add" class="link-button" />Add</button>
+                    <!--<button type="submit" name="edit:{{person_uuid}}" value="Edit" class="link-button" />Edit</button>-->
+                    <!--<button type="submit" name="delete:{{person_uuid}}" value="Delete" class="link-button" />Delete</button>-->
+                </td>
             </tr>
-        <tbody>
+            {{/people}} {{^people}}
+            <tr>
+                <td colspan="7">There are no records available</td>
+            </tr>
+            {{/people}}
+        </tbody>
+        <tfoot>
+            {{#paging}}
+            <tr>
+                <td colspan="6" class="paging">
+                    <p class="pagingText">{{pagingText}}</p>
+                    <a href="{{url}}?{{queryString}}p={{previousPage}}">
+                        < Previous</a>
+                    {{#pages}}
+                        <a href="{{url}}?{{queryString}}p={{pageNum}}">{{displayPageNum}}</a>
+                    {{/pages}}
+                    <a href="{{url}}?{{queryString}}p={{nextPage}}">Next ></a>
+                </td>
+            </tr>
+            {{/paging}}
+        </tfoot>
     </table>
-    <br/><br/>
+    {{/values}}
 
     {{<partials-submit-buttons}}
     {{/partials-submit-buttons}}

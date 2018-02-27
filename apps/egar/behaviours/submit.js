@@ -1,12 +1,19 @@
 'use strict';
 const _ = require('lodash');
 const moment = require('moment');
+const util = require('util');
 
 const config = require('../../../config')();
 const SubmitService = require('../services').SubmitService;
 const GarService = require('../services').GarService;
 
 const MAX_SUBMISSION_POLLS = config['max-submission-polls'];
+const SUBMIT_TIME_LIMIT_HRS = config['submit-time-limit-hours'];
+const SUBMIT_TIME_LIMIT_RELATIVITY = config['submit-before-after'].toLowerCase() === 'before' ?
+                            'before' : 'after';
+const SUBMIT_TIME_LIMIT_LOCATION = config['submit-departure-arrival'].toLowerCase() === 'departure' ?
+                            'departure' : 'arrival';
+
 
 /**
  * The FormController behaviours for the Submit page
@@ -156,7 +163,7 @@ module.exports = SubmitController => class extends SubmitController {
 
         const hasDateError = !this.validateDate(location && location.datetime);
         const hasTimeError = !this.validateTime(location && location.datetime);
-        const hasDateFutureError = !hasDateError && moment(location.datetime).isSameOrBefore();
+        const hasDateFutureError = !hasDateError && moment(location.datetime).isSameOrBefore(moment.utc());
 
         if (hasDateError) {
             const messageDate = req.translate(`errors.${type}-date`);
@@ -183,7 +190,7 @@ module.exports = SubmitController => class extends SubmitController {
      * @returns {Array} An array of validation errors
      */
     validateLocations(locations, req) {
-        const validationErrors = _.filter(_.concat(this.validateLocation(locations[0],
+        let validationErrors = _.filter(_.concat(this.validateLocation(locations[0],
             'departure', req), this.validateLocation(locations[1], 'arrival', req)), e => !!e);
 
         const departure = locations[0] || {};
@@ -205,6 +212,11 @@ module.exports = SubmitController => class extends SubmitController {
                 heading: req.translate('errors.arrival-error'),
                 message: req.translate('errors.departure-arrival-date-error')
             });
+        } else {
+            validationErrors = _.concat(validationErrors,
+                this.validateInSubmissionWindow(SUBMIT_TIME_LIMIT_LOCATION === 'departure' ? departure : arrival, req)
+            );
+
         }
 
         if (departureLocation === arrivalLocation && !_.isNil(departureLocation)) {
@@ -369,9 +381,10 @@ module.exports = SubmitController => class extends SubmitController {
      */
     validateFiles(files, req) {
         const validationErrors = [];
-        let errorMessage;
         if (files) {
             _.forEach(files, file => {
+                let errorMessage;
+
                 switch (file.file_status) {
                     case 'UPLOADING':
                     case 'AWAITING_VIRUS_SCAN':
@@ -404,6 +417,38 @@ module.exports = SubmitController => class extends SubmitController {
                 }
             });
         }
+        return validationErrors;
+    }
+
+    /**
+     * Validates that a GAR is valid to be submitted based on its departure/arrival date+time
+     * being in a valid window.
+     * @param {Object} location The departure or arrival
+     * @param {http.IncomingMessage} req The incoming request
+     */
+    validateInSubmissionWindow(location, req) {
+        const validationErrors = [];
+        const heading = req.translate(`errors.${SUBMIT_TIME_LIMIT_LOCATION}-error`);
+
+        if (location && !_.isEmpty(location.datetime)) {
+            const lastSubmissionTime = SUBMIT_TIME_LIMIT_RELATIVITY === 'before' ?
+                moment(location.datetime).subtract(SUBMIT_TIME_LIMIT_HRS, 'h') :
+                moment(location.datetime).add(SUBMIT_TIME_LIMIT_HRS, 'h');
+
+            if (moment.utc().isAfter(lastSubmissionTime)) {
+                const message = util.format(
+                    req.translate('errors.gar-outside-submit-window.message-template'),
+                    SUBMIT_TIME_LIMIT_HRS,
+                    req.translate(`errors.gar-outside-submit-window.${SUBMIT_TIME_LIMIT_RELATIVITY}`),
+                    req.translate(`errors.gar-outside-submit-window.${SUBMIT_TIME_LIMIT_LOCATION}`)
+                );
+
+                validationErrors.push({
+                    field: `${SUBMIT_TIME_LIMIT_LOCATION}-submit-limit-passed`, heading: heading, message: message
+                });
+            }
+        }
+
         return validationErrors;
     }
 

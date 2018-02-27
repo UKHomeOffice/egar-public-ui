@@ -4,6 +4,7 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 const uuid = require('uuid/v1');
 const fs = require('fs');
+const mimetypes = require('mime-types');
 
 const config = require('../config')();
 const log = config.logger;
@@ -46,10 +47,17 @@ const upload = multer({
         fileSize: config['file-upload-max-file-size']
     },
     fileFilter: (req, file, cb) => {
-        if (!config['file-upload-file-types'].includes(file.mimetype)) {
+        if (!config['file-upload-file-types'].includes(file.mimetype)
+            // Edge sends application/octet-stream instead of the real mime-type even if the file is not a .bin file
+            && (file.mimetype === 'application/octet-stream'
+                && !config['file-upload-file-types'].includes(mimetypes.lookup(file.originalname))
+            )
+        ) {
             req.session.fileError = FILE_FORMAT_ERR;
             cb(null, false);
         } else {
+            log.error(`file-upload: Rejecting file with mimetype ${file.mimetype}` +
+                      `(${mimetypes.lookup(file.originalname)})`);
             cb(null, true);
         }
     }

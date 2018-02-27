@@ -10,5 +10,6 @@ module.exports = _.extend(
     require('./fields/person'),
     require('./fields/supporting-files'),
     require('./fields/upload-files'),
+    require('./fields/upload-file-ok'),
     require('./fields/manage-gars')
 );

@@ -30,7 +30,7 @@ spec:
               secretKeyRef:
                 name: egar-secret
                 key: uis3ackey
-        image: pipe.egarteam.co.uk/egar-public-ui:$PUBLIC_UI_VER
+        image: pipe.egarteam.co.uk/egar-public-ui:5.0.15
         name: public-ui
         resources: {}
       - args:

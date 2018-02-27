@@ -6,7 +6,7 @@
     "header": "Manage my GARs"
   },
   "aircraft": {
-      "header": "Aircraft details"        
+      "header": "Aircraft details"
     },
     "departure": {
       "header": "Departure details"
@@ -21,7 +21,7 @@
       "header": "Adding Captain, Crew and Passengers"
     },
     "person-existing":{
-        "header": "Add previously entered Captain, Crew and Passengers"
+        "header": "Select captain, crew or passengers"
     },
     "person-type": {
       "header": "Select the type of person you wish to add to this flight"
@@ -61,6 +61,9 @@
     },
     "upload-files":{
       "header": "Upload supporting files"
+    },
+    "upload-file-ok":{
+      "header": "Is this file correct?"
     },
     "submit": {
       "header": "Submit GAR"
